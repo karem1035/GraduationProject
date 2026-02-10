@@ -25,7 +25,7 @@ public class UserRepoTest {
        user.setUsername("amrNada");
         user.setEmail("amr@test.com");
         user.setPassword("123456");
-        user.setRole(Role.USER);
+        user.setRole(Role.TOURIST);
        UserEntity userTest =userRepo.save(user);
        assertThat(userTest.getEmail()).isNotNull();
 
