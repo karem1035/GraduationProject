@@ -22,6 +22,10 @@ public class UserEntity {
     String Password;
     @Enumerated(EnumType.STRING)
     Role role;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private TourGuideEntity tourGuide;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private TouristProfileEntity tourristProfile;
 
 
 }

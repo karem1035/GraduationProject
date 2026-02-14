@@ -1,5 +1,7 @@
 package com.example.Toda.service;
 
+import com.example.Toda.DTO.TourGuideBasicInfoRequest;
+import com.example.Toda.DTO.TourGuideBasicInfoResponse;
 import com.example.Toda.DTO.TourGuideRequest;
 import com.example.Toda.DTO.TourGuideResponse;
 import com.example.Toda.Entity.TourGuideEntity;
@@ -143,4 +145,21 @@ public class TourGuideService {
         response.setIdDocument(entity.getIdDocument());
         return response;
     }
+
+    public void createBasicprofile(TourGuideBasicInfoRequest basicInfoRequest) {
+        String email=basicInfoRequest.email();
+        TourGuideEntity  tourGuideEntity=  tourGuideRepo.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Tour Guide not found with email: " +email));
+        tourGuideEntity.setCity(basicInfoRequest.city());
+        tourGuideEntity.setPhone(basicInfoRequest.phone());
+        tourGuideRepo.save(tourGuideEntity);
+
+    }
+
+    public TourGuideBasicInfoResponse ReturnBasicProfile(String email) {
+        return tourGuideRepo.findBasicInfoByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Tour Guide not found with email: " + email));
+    }
+
+
 }

@@ -1,5 +1,6 @@
 package com.example.Toda.DTO;
 
+import com.example.Toda.Entity.Language;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

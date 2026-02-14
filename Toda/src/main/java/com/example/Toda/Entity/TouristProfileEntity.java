@@ -15,12 +15,11 @@ import java.util.List;
 @NoArgsConstructor
 public class TouristProfileEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "user_id", nullable = false)
-    private Long userId;
-
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
     @Column(name = "name", nullable = false)
     private String name;
 

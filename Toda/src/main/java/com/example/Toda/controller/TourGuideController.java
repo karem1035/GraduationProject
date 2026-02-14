@@ -1,10 +1,7 @@
 package com.example.Toda.controller;
 
-import com.example.Toda.DTO.ApiResponse;
-import com.example.Toda.DTO.TourGuideRequest;
-import com.example.Toda.DTO.TourGuideResponse;
+import com.example.Toda.DTO.*;
 import com.example.Toda.service.TourGuideService;
-import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +14,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -30,12 +27,21 @@ public class TourGuideController {
         this.tourGuideService = tourGuideService;
     }
 
-    @PostMapping("/profile")
-    public ResponseEntity<ApiResponse<TourGuideResponse>> createProfile(@Valid @RequestBody TourGuideRequest request) {
-        TourGuideResponse response = tourGuideService.createProfile(request);
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(ApiResponse.success(response, "Tour guide profile created successfully"));
+     @PostMapping("/profile/basic-info")
+     public ResponseEntity<ApiResponse<String>>createBasicProfile
+             (@RequestBody TourGuideBasicInfoRequest basicInfoRequest)
+     {
+      tourGuideService.createBasicprofile(basicInfoRequest);
+      return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success("created",null));
+
+     }
+    @GetMapping("/profile/basic-info")
+    public ResponseEntity<ApiResponse<TourGuideBasicInfoResponse>> ReturnBasicProfile
+            (@RequestParam String email)
+    {
+        TourGuideBasicInfoResponse response=tourGuideService.ReturnBasicProfile(email);
+        return ResponseEntity.ok().body(ApiResponse.success("success",response));
+
     }
 
     @PatchMapping("/profile/{id}")
@@ -45,7 +51,7 @@ public class TourGuideController {
         TourGuideResponse response = tourGuideService.updateProfile(id, request);
         return ResponseEntity
                 .ok()
-                .body(ApiResponse.success(response, "Tour guide profile updated successfully"));
+                .body(ApiResponse.success( "Tour guide profile updated successfully" ,response));
     }
 
     @GetMapping("/profile/{id}")
@@ -53,7 +59,7 @@ public class TourGuideController {
         TourGuideResponse response = tourGuideService.getProfileById(id);
         return ResponseEntity
                 .ok()
-                .body(ApiResponse.success(response, "Tour guide profile retrieved successfully"));
+                .body(ApiResponse.success("Tour guide profile retrieved successfully", response));
     }
 
     @GetMapping("/profiles")
@@ -64,7 +70,7 @@ public class TourGuideController {
         Page<TourGuideResponse> responsePage = tourGuideService.getAllTourGuides(pageable);
         return ResponseEntity
                 .ok()
-                .body(ApiResponse.success(responsePage, "Tour guides retrieved successfully"));
+                .body(ApiResponse.success( "Tour guides retrieved successfully",responsePage));
     }
 
     @PostMapping("/profile/{id}/photo")

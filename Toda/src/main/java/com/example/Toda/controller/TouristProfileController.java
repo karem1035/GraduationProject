@@ -1,10 +1,10 @@
+/*
 package com.example.Toda.controller;
 
 import com.example.Toda.DTO.ApiResponse;
 import com.example.Toda.DTO.TouristProfileRequest;
 import com.example.Toda.DTO.TouristProfileResponse;
 import com.example.Toda.service.TouristProfileService;
-import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -25,11 +25,11 @@ public class TouristProfileController {
     }
 
     @PostMapping("/profile")
-    public ResponseEntity<ApiResponse<TouristProfileResponse>> createProfile(@Valid @RequestBody TouristProfileRequest request) {
+    public ResponseEntity<ApiResponse<TouristProfileResponse>> createProfile( @RequestBody TouristProfileRequest request) {
         TouristProfileResponse response = touristProfileService.createProfile(request);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(ApiResponse.success(response, "Tourist profile created successfully"));
+                .body(ApiResponse.success( "Tourist profile created successfully",response ));
     }
 
     @PatchMapping("/profile/{id}")
@@ -39,7 +39,7 @@ public class TouristProfileController {
         TouristProfileResponse response = touristProfileService.updateProfile(id, request);
         return ResponseEntity
                 .ok()
-                .body(ApiResponse.success(response, "Tourist profile updated successfully"));
+                .body(ApiResponse.success(  "Tourist profile updated successfully" ,response  ));
     }
 
     @GetMapping("/profile/{id}")
@@ -47,7 +47,7 @@ public class TouristProfileController {
         TouristProfileResponse response = touristProfileService.getProfileById(id);
         return ResponseEntity
                 .ok()
-                .body(ApiResponse.success(response, "Tourist profile retrieved successfully"));
+                .body(ApiResponse.success("Tourist profile retrieved successfully" ,response ));
     }
 
     @GetMapping("/profiles")
@@ -56,7 +56,7 @@ public class TouristProfileController {
         List<TouristProfileResponse> responses = touristProfileService.getProfilesByUserId(userId);
         return ResponseEntity
                 .ok()
-                .body(ApiResponse.success(responses, "Tourist profiles retrieved successfully"));
+                .body(ApiResponse.success("Tourist profiles retrieved successfully",responses ));
     }
 
     @GetMapping("/profiles/all")
@@ -67,7 +67,7 @@ public class TouristProfileController {
         Page<TouristProfileResponse> responsePage = touristProfileService.getAllTourists(pageable);
         return ResponseEntity
                 .ok()
-                .body(ApiResponse.success(responsePage, "Tourists retrieved successfully"));
+                .body(ApiResponse.success("Tourists retrieved successfully",responsePage ));
     }
 
     @DeleteMapping("/profile/{id}")
@@ -75,6 +75,7 @@ public class TouristProfileController {
         touristProfileService.deleteProfile(id);
         return ResponseEntity
                 .ok()
-                .body(ApiResponse.success(null, "Tourist profile deleted successfully"));
+                .body(ApiResponse.success("Tourist profile deleted successfully",null ));
     }
 }
+*/

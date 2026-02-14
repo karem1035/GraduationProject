@@ -1,12 +1,12 @@
 package com.example.Toda.Entity;
 
-import com.example.Toda.DTO.Language;
 import com.example.Toda.DTO.PriceRange;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,8 +16,12 @@ import java.util.List;
 @NoArgsConstructor
 public class TourGuideEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -26,45 +30,48 @@ public class TourGuideEntity {
     private String email;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "type", nullable = false)
+    @Column(name = "type", nullable = true)
     private GuideType type;
 
-    @Column(name = "phone", nullable = false)
+    @Column(name = "phone", nullable = true)
     private String phone;
 
-    @Column(name = "city", nullable = false)
+    @Column(name = "city", nullable = true)
     private String city;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "guide_type", nullable = false)
+    @Column(name = "guide_type", nullable = true)
     private GuideTypeCategory guideType;
 
     @Column(name = "licensed_number")
     private String licensedNumber;
 
-    @Column(name = "years_of_experience", nullable = false)
+    @Column(name = "years_of_experience", nullable = true)
     private Integer yearsOfExperience;
 
     @ElementCollection
     @CollectionTable(name = "tour_guide_specialization", joinColumns = @JoinColumn(name = "tour_guide_id"))
     @Column(name = "specialization")
-    private List<String> specialization;
+    private List<String> specialization = new ArrayList<>();
 
     @ElementCollection
-    @CollectionTable(name = "tour_guide_languages", joinColumns = @JoinColumn(name = "tour_guide_id"))
-    private List<Language> languages;
+    @CollectionTable(
+            name = "tour_guide_languages",
+            joinColumns = @JoinColumn(name = "tour_guide_id")
+    )
+    private List<Language> languages = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "tour_type", nullable = false)
+    @Column(name = "tour_type", nullable = true)
     private TourType tourType;
 
-    @Column(name = "covered_area", nullable = false)
+    @Column(name = "covered_area", nullable = true)
     private String coveredArea;
 
     @Embedded
     private PriceRange priceRange;
 
-    @Column(name = "tour_duration", nullable = false)
+    @Column(name = "tour_duration", nullable = true)
     private Integer tourDuration;
 
     @Column(name = "profile_photo")
@@ -76,18 +83,8 @@ public class TourGuideEntity {
     @Column(name = "id_document")
     private String idDocument;
 
-    public enum GuideType {
-        MALE,
-        FEMALE
-    }
 
-    public enum GuideTypeCategory {
-        LICENSED_GUIDE,
-        LOCAL_GUIDE
-    }
-
-    public enum TourType {
-        GROUP,
-        PRIVATE
-    }
+    public enum GuideType { MALE, FEMALE }
+    public enum GuideTypeCategory { LICENSED_GUIDE, LOCAL_GUIDE }
+    public enum TourType { GROUP, PRIVATE }
 }
