@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -29,20 +30,54 @@ public class TourGuideController {
 
      @PostMapping("/profile/basic-info")
      public ResponseEntity<ApiResponse<String>>createBasicProfile
-             (@RequestBody TourGuideBasicInfoRequest basicInfoRequest)
+             (@RequestBody TourGuideBasicInfoRequest basicInfoRequest,@RequestHeader("Authorization")String authHeader)
      {
-      tourGuideService.createBasicprofile(basicInfoRequest);
+         if(!authHeader.startsWith("Bearer ")||authHeader==null)throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+         String token = authHeader.substring(7);
+      tourGuideService.createBasicprofile(basicInfoRequest,token);
       return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success("created",null));
 
      }
     @GetMapping("/profile/basic-info")
     public ResponseEntity<ApiResponse<TourGuideBasicInfoResponse>> ReturnBasicProfile
-            (@RequestParam String email)
+            (@RequestHeader("Authorization")String authHeader)
     {
-        TourGuideBasicInfoResponse response=tourGuideService.ReturnBasicProfile(email);
+        if(!authHeader.startsWith("Bearer ")||authHeader==null)throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        String token = authHeader.substring(7);
+        TourGuideBasicInfoResponse response=tourGuideService.ReturnBasicProfile(token);
         return ResponseEntity.ok().body(ApiResponse.success("success",response));
 
     }
+    @PostMapping("/profile/professional-info")
+    public ResponseEntity<ApiResponse<String>> profileProfessionalInfo(@RequestHeader("Authorization")String authHeader
+       ,@RequestBody TourGuideProfessionalInfoRequest basicInfoRequest)
+    {
+        if(!authHeader.startsWith("Bearer ")||authHeader==null)throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        String token = authHeader.substring(7);
+        tourGuideService.compeletProfInfo(basicInfoRequest,token);
+        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success("created",null));
+
+
+    }
+    @PostMapping("/profile/languages")
+    public ResponseEntity<ApiResponse<String>>createLanguages(@RequestHeader("Authorization")String authHeader
+    ,@RequestBody TourGuideLanguagesInfoRequest basicInfoRequest)
+    {
+        if(!authHeader.startsWith("Bearer ")||authHeader==null)throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        String token = authHeader.substring(7);
+        tourGuideService.addLanguages(token,basicInfoRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success("created",null));
+    }
+    @PostMapping("/profile/tour-details")
+    public ResponseEntity<ApiResponse<String>>createTourDetails(@RequestHeader("Authorization")String authHeader
+            ,@RequestBody TourGuideDetailsInfoRequest basicInfoRequest)
+    {
+        if(!authHeader.startsWith("Bearer ")||authHeader==null)throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        String token = authHeader.substring(7);
+        tourGuideService.createTourDetails(token,basicInfoRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success("created",null));
+    }
+
 
     @PatchMapping("/profile/{id}")
     public ResponseEntity<ApiResponse<TourGuideResponse>> updateProfile(
