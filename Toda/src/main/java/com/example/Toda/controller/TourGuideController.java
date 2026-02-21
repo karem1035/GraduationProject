@@ -108,58 +108,64 @@ public class TourGuideController {
                 .body(ApiResponse.success( "Tour guides retrieved successfully",responsePage));
     }
 
-    @PostMapping("/profile/{id}/photo")
+    @PostMapping("/profile/photo")
     public ResponseEntity<ApiResponse<String>> uploadProfilePhoto(
-            @PathVariable Long id,
+            @RequestHeader("Authorization") String authHeader,
             @RequestParam("file") MultipartFile file) {
+        String token = authHeader.substring(7);
         String fileUrl = saveFile(file, "profile-photos");
-        tourGuideService.updateProfileField(id, "profilePhoto", fileUrl);
+        tourGuideService.updateProfileFieldByToken(token, "profilePhoto", fileUrl);
         return ResponseEntity
                 .ok()
                 .body(ApiResponse.success(fileUrl, "Profile photo uploaded successfully"));
     }
 
-    @DeleteMapping("/profile/{id}/photo")
-    public ResponseEntity<ApiResponse<String>> deleteProfilePhoto(@PathVariable Long id) {
-        tourGuideService.deleteProfileField(id, "profilePhoto");
+    @DeleteMapping("/profile/photo")
+    public ResponseEntity<ApiResponse<String>> deleteProfilePhoto(@RequestHeader("Authorization") String authHeader) {
+        String token = authHeader.substring(7);
+        tourGuideService.deleteProfileFieldByToken(token, "profilePhoto");
         return ResponseEntity
                 .ok()
                 .body(ApiResponse.success(null, "Profile photo deleted successfully"));
     }
 
-    @PostMapping("/profile/{id}/license")
+    @PostMapping("/profile/license")
     public ResponseEntity<ApiResponse<String>> uploadLicense(
-            @PathVariable Long id,
+            @RequestHeader("Authorization") String authHeader,
             @RequestParam("file") MultipartFile file) {
+        String token = authHeader.substring(7);
         String fileUrl = saveFile(file, "licenses");
-        tourGuideService.updateProfileField(id, "license", fileUrl);
+        tourGuideService.updateProfileFieldByToken(token, "license", fileUrl);
         return ResponseEntity
                 .ok()
                 .body(ApiResponse.success(fileUrl, "License uploaded successfully"));
     }
 
-    @DeleteMapping("/profile/{id}/license")
-    public ResponseEntity<ApiResponse<String>> deleteLicense(@PathVariable Long id) {
-        tourGuideService.deleteProfileField(id, "license");
+    @DeleteMapping("/profile/license")
+    public ResponseEntity<ApiResponse<String>> deleteLicense(@RequestHeader("Authorization") String authHeader) {
+        String token = authHeader.substring(7);
+        tourGuideService.deleteProfileFieldByToken(token, "license");
         return ResponseEntity
                 .ok()
                 .body(ApiResponse.success(null, "License deleted successfully"));
     }
 
-    @PostMapping("/profile/{id}/id")
+    @PostMapping("/profile/id")
     public ResponseEntity<ApiResponse<String>> uploadIdDocument(
-            @PathVariable Long id,
+            @RequestHeader("Authorization") String authHeader,
             @RequestParam("file") MultipartFile file) {
+        String token = authHeader.substring(7);
         String fileUrl = saveFile(file, "id-documents");
-        tourGuideService.updateProfileField(id, "idDocument", fileUrl);
+        tourGuideService.updateProfileFieldByToken(token, "idDocument", fileUrl);
         return ResponseEntity
                 .ok()
                 .body(ApiResponse.success(fileUrl, "ID document uploaded successfully"));
     }
 
-    @DeleteMapping("/profile/{id}/id")
-    public ResponseEntity<ApiResponse<String>> deleteIdDocument(@PathVariable Long id) {
-        tourGuideService.deleteProfileField(id, "idDocument");
+    @DeleteMapping("/profile/id")
+    public ResponseEntity<ApiResponse<String>> deleteIdDocument(@RequestHeader("Authorization") String authHeader) {
+        String token = authHeader.substring(7);
+        tourGuideService.deleteProfileFieldByToken(token, "idDocument");
         return ResponseEntity
                 .ok()
                 .body(ApiResponse.success(null, "ID document deleted successfully"));
@@ -167,6 +173,12 @@ public class TourGuideController {
 
     private String saveFile(MultipartFile file, String folderName) {
         try {
+            // Basic Content-Type validation to prevent executable uploads
+            String contentType = file.getContentType();
+            if (contentType == null || !(contentType.startsWith("image/") || contentType.equals("application/pdf"))) {
+                throw new RuntimeException("Invalid file type. Only images and PDFs are allowed.");
+            }
+
             // Create upload directory if it doesn't exist
             String uploadDir = "uploads/" + folderName;
             Path uploadPath = Paths.get(uploadDir);

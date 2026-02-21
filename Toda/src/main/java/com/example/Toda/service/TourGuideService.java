@@ -60,9 +60,10 @@ public class TourGuideService {
                 .map(this::mapToResponse);
     }
 
-    public void updateProfileField(Long id, String fieldName, String value) {
-        TourGuideEntity tourGuide = tourGuideRepo.findById(id)
-                .orElseThrow(() -> new TourGuideNotFoundException("Tour guide not found with id: " + id));
+    public void updateProfileFieldByToken(String token, String fieldName, String value) {
+        String email = jwtService.extractUsername(token);
+        TourGuideEntity tourGuide = tourGuideRepo.findByEmail(email)
+                .orElseThrow(() -> new TourGuideNotFoundException("Tour guide not found with email: " + email));
 
         switch (fieldName) {
             case "profilePhoto":
@@ -81,9 +82,10 @@ public class TourGuideService {
         tourGuideRepo.save(tourGuide);
     }
 
-    public void deleteProfileField(Long id, String fieldName) {
-        TourGuideEntity tourGuide = tourGuideRepo.findById(id)
-                .orElseThrow(() -> new TourGuideNotFoundException("Tour guide not found with id: " + id));
+    public void deleteProfileFieldByToken(String token, String fieldName) {
+        String email = jwtService.extractUsername(token);
+        TourGuideEntity tourGuide = tourGuideRepo.findByEmail(email)
+                .orElseThrow(() -> new TourGuideNotFoundException("Tour guide not found with email: " + email));
 
         String fileUrl = null;
         switch (fieldName) {
