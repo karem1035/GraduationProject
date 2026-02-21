@@ -81,6 +81,46 @@ public class TourGuideService {
         tourGuideRepo.save(tourGuide);
     }
 
+    public void deleteProfileField(Long id, String fieldName) {
+        TourGuideEntity tourGuide = tourGuideRepo.findById(id)
+                .orElseThrow(() -> new TourGuideNotFoundException("Tour guide not found with id: " + id));
+
+        String fileUrl = null;
+        switch (fieldName) {
+            case "profilePhoto":
+                fileUrl = tourGuide.getProfilePhoto();
+                tourGuide.setProfilePhoto(null);
+                break;
+            case "license":
+                fileUrl = tourGuide.getLicense();
+                tourGuide.setLicense(null);
+                break;
+            case "idDocument":
+                fileUrl = tourGuide.getIdDocument();
+                tourGuide.setIdDocument(null);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid field name: " + fieldName);
+        }
+
+        if (fileUrl != null) {
+            try {
+                // Determine absolute path from relative URL
+                // The DB stores URLs starting with "/uploads/", but the physical dir is "uploads/"
+                String filePathStr = fileUrl.startsWith("/") ? fileUrl.substring(1) : fileUrl;
+                java.nio.file.Path filePath = java.nio.file.Paths.get(filePathStr);
+                if (java.nio.file.Files.exists(filePath)) {
+                    java.nio.file.Files.delete(filePath);
+                }
+            } catch (java.io.IOException e) {
+                // Log the exception but do not stop the database update
+                e.printStackTrace();
+            }
+        }
+
+        tourGuideRepo.save(tourGuide);
+    }
+
     private TourGuideEntity mapToEntity(TourGuideRequest request) {
         TourGuideEntity entity = new TourGuideEntity();
         entity.setName(request.getName());

@@ -119,6 +119,14 @@ public class TourGuideController {
                 .body(ApiResponse.success(fileUrl, "Profile photo uploaded successfully"));
     }
 
+    @DeleteMapping("/profile/{id}/photo")
+    public ResponseEntity<ApiResponse<String>> deleteProfilePhoto(@PathVariable Long id) {
+        tourGuideService.deleteProfileField(id, "profilePhoto");
+        return ResponseEntity
+                .ok()
+                .body(ApiResponse.success(null, "Profile photo deleted successfully"));
+    }
+
     @PostMapping("/profile/{id}/license")
     public ResponseEntity<ApiResponse<String>> uploadLicense(
             @PathVariable Long id,
@@ -128,6 +136,14 @@ public class TourGuideController {
         return ResponseEntity
                 .ok()
                 .body(ApiResponse.success(fileUrl, "License uploaded successfully"));
+    }
+
+    @DeleteMapping("/profile/{id}/license")
+    public ResponseEntity<ApiResponse<String>> deleteLicense(@PathVariable Long id) {
+        tourGuideService.deleteProfileField(id, "license");
+        return ResponseEntity
+                .ok()
+                .body(ApiResponse.success(null, "License deleted successfully"));
     }
 
     @PostMapping("/profile/{id}/id")
@@ -141,6 +157,14 @@ public class TourGuideController {
                 .body(ApiResponse.success(fileUrl, "ID document uploaded successfully"));
     }
 
+    @DeleteMapping("/profile/{id}/id")
+    public ResponseEntity<ApiResponse<String>> deleteIdDocument(@PathVariable Long id) {
+        tourGuideService.deleteProfileField(id, "idDocument");
+        return ResponseEntity
+                .ok()
+                .body(ApiResponse.success(null, "ID document deleted successfully"));
+    }
+
     private String saveFile(MultipartFile file, String folderName) {
         try {
             // Create upload directory if it doesn't exist
@@ -152,7 +176,10 @@ public class TourGuideController {
 
             // Generate unique filename
             String originalFilename = file.getOriginalFilename();
-            String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
+            String fileExtension = "";
+            if (originalFilename != null && originalFilename.contains(".")) {
+                fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
+            }
             String newFilename = UUID.randomUUID().toString() + fileExtension;
 
             // Save file
