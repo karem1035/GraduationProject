@@ -2,10 +2,18 @@ package com.example.Toda.controller;
 
 import com.example.Toda.DTO.*;
 import com.example.Toda.service.TourGuideService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,9 +28,13 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/tourguide")
+@SecurityRequirement(name = "Bearer Authentication")
 public class TourGuideController {
 
     private final TourGuideService tourGuideService;
+
+    @Value("${app.server.base-url}")
+    private String serverBaseUrl;
 
     public TourGuideController(TourGuideService tourGuideService) {
         this.tourGuideService = tourGuideService;
@@ -108,9 +120,16 @@ public class TourGuideController {
                 .body(ApiResponse.success( "Tour guides retrieved successfully",responsePage));
     }
 
-    @PostMapping("/profile/photo")
+    @PostMapping(value = "/profile/photo", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @Operation(summary = "Upload profile photo", 
+               description = "Upload a profile photo for the authenticated tour guide. Supported formats: jpg, png, gif, webp")
+    @ApiResponses(value = {
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Photo uploaded successfully"),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Invalid file type or size")
+    })
     public ResponseEntity<ApiResponse<String>> uploadProfilePhoto(
             @RequestHeader("Authorization") String authHeader,
+            @Parameter(description = "Profile photo file", required = true, content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA_VALUE))
             @RequestParam("file") MultipartFile file) {
         String token = authHeader.substring(7);
         String fileUrl = saveFile(file, "profile-photos");
@@ -121,6 +140,7 @@ public class TourGuideController {
     }
 
     @DeleteMapping("/profile/photo")
+    @Operation(summary = "Delete profile photo", description = "Delete the profile photo of the authenticated tour guide")
     public ResponseEntity<ApiResponse<String>> deleteProfilePhoto(@RequestHeader("Authorization") String authHeader) {
         String token = authHeader.substring(7);
         tourGuideService.deleteProfileFieldByToken(token, "profilePhoto");
@@ -129,9 +149,16 @@ public class TourGuideController {
                 .body(ApiResponse.success(null, "Profile photo deleted successfully"));
     }
 
-    @PostMapping("/profile/license")
+    @PostMapping(value = "/profile/license", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @Operation(summary = "Upload license", 
+               description = "Upload a license document for the authenticated tour guide. Supported formats: pdf, jpg, png")
+    @ApiResponses(value = {
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "License uploaded successfully"),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Invalid file type or size")
+    })
     public ResponseEntity<ApiResponse<String>> uploadLicense(
             @RequestHeader("Authorization") String authHeader,
+            @Parameter(description = "License document file", required = true, content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA_VALUE))
             @RequestParam("file") MultipartFile file) {
         String token = authHeader.substring(7);
         String fileUrl = saveFile(file, "licenses");
@@ -142,6 +169,7 @@ public class TourGuideController {
     }
 
     @DeleteMapping("/profile/license")
+    @Operation(summary = "Delete license", description = "Delete the license document of the authenticated tour guide")
     public ResponseEntity<ApiResponse<String>> deleteLicense(@RequestHeader("Authorization") String authHeader) {
         String token = authHeader.substring(7);
         tourGuideService.deleteProfileFieldByToken(token, "license");
@@ -150,9 +178,16 @@ public class TourGuideController {
                 .body(ApiResponse.success(null, "License deleted successfully"));
     }
 
-    @PostMapping("/profile/id")
+    @PostMapping(value = "/profile/id", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @Operation(summary = "Upload ID document", 
+               description = "Upload an ID document for the authenticated tour guide. Supported formats: pdf, jpg, png")
+    @ApiResponses(value = {
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "ID document uploaded successfully"),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Invalid file type or size")
+    })
     public ResponseEntity<ApiResponse<String>> uploadIdDocument(
             @RequestHeader("Authorization") String authHeader,
+            @Parameter(description = "ID document file", required = true, content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA_VALUE))
             @RequestParam("file") MultipartFile file) {
         String token = authHeader.substring(7);
         String fileUrl = saveFile(file, "id-documents");
@@ -163,6 +198,7 @@ public class TourGuideController {
     }
 
     @DeleteMapping("/profile/id")
+    @Operation(summary = "Delete ID document", description = "Delete the ID document of the authenticated tour guide")
     public ResponseEntity<ApiResponse<String>> deleteIdDocument(@RequestHeader("Authorization") String authHeader) {
         String token = authHeader.substring(7);
         tourGuideService.deleteProfileFieldByToken(token, "idDocument");
@@ -198,8 +234,8 @@ public class TourGuideController {
             Path filePath = uploadPath.resolve(newFilename);
             Files.copy(file.getInputStream(), filePath);
 
-            // Return file URL (relative path)
-            return "/uploads/" + folderName + "/" + newFilename;
+            // Return full file URL with server base URL
+            return serverBaseUrl + "/uploads/" + folderName + "/" + newFilename;
         } catch (IOException e) {
             throw new RuntimeException("Failed to save file: " + e.getMessage());
         }

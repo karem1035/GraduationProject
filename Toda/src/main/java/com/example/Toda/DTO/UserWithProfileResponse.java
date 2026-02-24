@@ -42,6 +42,9 @@ public class UserWithProfileResponse {
         private String coveredArea;
         private Integer tourDuration;
         private List<Language> languages;
+        private String profilePhoto;
+        private String license;
+        private String idDocument;
     }
 
     @Data

@@ -89,7 +89,10 @@ public class authService {
                                 tg.getTourType() != null ? tg.getTourType().name() : null,
                                 tg.getCoveredArea(),
                                 tg.getTourDuration(),
-                                tg.getLanguages()
+                                tg.getLanguages(),
+                                tg.getProfilePhoto(),
+                                tg.getLicense(),
+                                tg.getIdDocument()
                         );
                 response.setTourGuideProfile(profileData);
             }
