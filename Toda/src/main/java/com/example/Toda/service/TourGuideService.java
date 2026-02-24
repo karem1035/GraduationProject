@@ -4,6 +4,7 @@ import com.example.Toda.DTO.*;
 import com.example.Toda.Entity.TourGuideEntity;
 import com.example.Toda.exception.TourGuideNotFoundException;
 import com.example.Toda.repo.TourGuideRepo;
+import com.example.Toda.repo.UserRepo;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,10 +17,12 @@ public class TourGuideService {
 
     private final TourGuideRepo tourGuideRepo;
     private final JWTService jwtService;
+    private final UserRepo userRepo;
 
-    public TourGuideService(TourGuideRepo tourGuideRepo, JWTService jwtService) {
+    public TourGuideService(TourGuideRepo tourGuideRepo, JWTService jwtService, UserRepo userRepo) {
         this.tourGuideRepo = tourGuideRepo;
         this.jwtService = jwtService;
+        this.userRepo = userRepo;
     }
 
     public TourGuideResponse createProfile(TourGuideRequest request) {
@@ -194,12 +197,24 @@ public class TourGuideService {
     @Transactional
     public void createBasicprofile(TourGuideBasicInfoRequest basicInfoRequest, String token) {
         String email = jwtService.extractUsername(token);
+        
+        // Create TourGuideEntity if it doesn't exist
         TourGuideEntity tourGuideEntity = tourGuideRepo.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Tour Guide not found with email: " + email));
+                .orElseGet(() -> {
+                    // Create new TourGuideEntity from UserEntity
+                    var user = userRepo.findByEmail(email)
+                            .orElseThrow(() -> new RuntimeException("User not found with email: " + email));
+                    TourGuideEntity newEntity = new TourGuideEntity();
+                    newEntity.setUser(user);
+                    newEntity.setEmail(email);
+                    newEntity.setName(user.getUsername());
+                    newEntity.setType(TourGuideEntity.GuideType.MALE); // Default to MALE
+                    return newEntity;
+                });
+        
         tourGuideEntity.setCity(basicInfoRequest.city());
         tourGuideEntity.setPhone(basicInfoRequest.phone());
         tourGuideRepo.save(tourGuideEntity);
-
     }
 
     public TourGuideBasicInfoResponse ReturnBasicProfile(String token) {
@@ -211,30 +226,65 @@ public class TourGuideService {
     @Transactional
     public void compeletProfInfo(TourGuideProfessionalInfoRequest basicInfoRequest, String token) {
         String email = jwtService.extractUsername(token);
+        
+        // Create TourGuideEntity if it doesn't exist
         TourGuideEntity entity = tourGuideRepo.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Tour Guide not found with email: " + email));
+                .orElseGet(() -> {
+                    var user = userRepo.findByEmail(email)
+                            .orElseThrow(() -> new RuntimeException("User not found with email: " + email));
+                    TourGuideEntity newEntity = new TourGuideEntity();
+                    newEntity.setUser(user);
+                    newEntity.setEmail(email);
+                    newEntity.setName(user.getUsername());
+                    newEntity.setType(TourGuideEntity.GuideType.MALE); // Default to MALE
+                    return newEntity;
+                });
 
         entity.setLicensedNumber(basicInfoRequest.licensedNumber());
         entity.setYearsOfExperience(basicInfoRequest.yearsOfExperience());
         entity.setSpecialization(basicInfoRequest.specialization());
         entity.setGuideType(TourGuideEntity.GuideTypeCategory.valueOf(basicInfoRequest.guideType()));
         tourGuideRepo.save(entity);
-
     }
 
+    @Transactional
     public void addLanguages(String token , TourGuideLanguagesInfoRequest basicInfoRequest) {
         String email = jwtService.extractUsername(token);
+        
+        // Create TourGuideEntity if it doesn't exist
         TourGuideEntity entity = tourGuideRepo.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Tour Guide not found with email: " + email));
+                .orElseGet(() -> {
+                    var user = userRepo.findByEmail(email)
+                            .orElseThrow(() -> new RuntimeException("User not found with email: " + email));
+                    TourGuideEntity newEntity = new TourGuideEntity();
+                    newEntity.setUser(user);
+                    newEntity.setEmail(email);
+                    newEntity.setName(user.getUsername());
+                    newEntity.setType(TourGuideEntity.GuideType.MALE); // Default to MALE
+                    return newEntity;
+                });
 
         entity.setLanguages(basicInfoRequest.languages());
         tourGuideRepo.save(entity);
     }
 
+    @Transactional
     public void createTourDetails(String token, TourGuideDetailsInfoRequest basicInfoRequest) {
         String email = jwtService.extractUsername(token);
+        
+        // Create TourGuideEntity if it doesn't exist
         TourGuideEntity entity = tourGuideRepo.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Tour Guide not found with email: " + email));
+                .orElseGet(() -> {
+                    var user = userRepo.findByEmail(email)
+                            .orElseThrow(() -> new RuntimeException("User not found with email: " + email));
+                    TourGuideEntity newEntity = new TourGuideEntity();
+                    newEntity.setUser(user);
+                    newEntity.setEmail(email);
+                    newEntity.setName(user.getUsername());
+                    newEntity.setType(TourGuideEntity.GuideType.MALE); // Default to MALE
+                    return newEntity;
+                });
+
         entity.setTourType(TourGuideEntity.TourType.valueOf(basicInfoRequest.tourType()));
         entity.setTourDuration(basicInfoRequest.tourDuration());
         entity.setCoveredArea(basicInfoRequest.coveredArea());

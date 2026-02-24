@@ -3,6 +3,8 @@ package com.example.Toda.controller;
 import com.example.Toda.DTO.*;
 import com.example.Toda.service.*;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -83,6 +85,23 @@ public class authController {
         otpService.verify(otp.OTP());
         return ResponseEntity.ok().body(ApiResponse.success("OTP has been verified",null));
 
+    }
+
+    @GetMapping("/me")
+    @Operation(summary = "Get current user with profile", 
+               description = "Returns the current authenticated user along with their profile (TourGuide or Tourist)")
+    @SecurityRequirement(name = "Bearer Authentication")
+    public ResponseEntity<ApiResponse<UserWithProfileResponse>> getMe(
+            @RequestHeader("Authorization") String authHeader) {
+        
+        // Extract token from Authorization header
+        String token = authHeader.substring(7); // Remove "Bearer " prefix
+        String email = jwtService.extractUsername(token);
+        
+        UserWithProfileResponse response = authService.getUserWithProfile(email);
+        return ResponseEntity.ok().body(
+                ApiResponse.success("User retrieved successfully", response)
+        );
     }
 
 }
