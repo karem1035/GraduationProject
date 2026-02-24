@@ -1,5 +1,6 @@
 package com.example.Toda.DTO;
 
+import com.example.Toda.Entity.Language;
 import com.example.Toda.Entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -40,6 +41,7 @@ public class UserWithProfileResponse {
         private String tourType;
         private String coveredArea;
         private Integer tourDuration;
+        private List<Language> languages;
     }
 
     @Data

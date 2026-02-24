@@ -88,7 +88,8 @@ public class authService {
                                 tg.getGuideType() != null ? tg.getGuideType().name() : null,
                                 tg.getTourType() != null ? tg.getTourType().name() : null,
                                 tg.getCoveredArea(),
-                                tg.getTourDuration()
+                                tg.getTourDuration(),
+                                tg.getLanguages()
                         );
                 response.setTourGuideProfile(profileData);
             }
