@@ -649,3 +649,259 @@ Caused by: org.apache.activemq.artemis.api.core.ActiveMQNotConnectedException: A
 	... 13 common frames omitted
 
 2026-02-24T09:44:48.448+02:00 ERROR 547708 --- [Toda] [ntContainer#0-1] o.s.j.l.DefaultMessageListenerContainer  : Could not refresh JMS Connection for destination 'otp-queue' - retrying using FixedBackOff{interval=5000, currentAttempts=16, maxAttempts=unlimited}. Cause: Failed to create session factory; nested exception is ActiveMQNotConnectedException[errorType=NOT_CONNECTED message=AMQ219007: Cannot connect to server(s). Tried with all available servers.]
+2026-02-24T09:44:53.450+02:00  INFO 547708 --- [Toda] [ntContainer#0-1] o.s.j.c.CachingConnectionFactory         : Encountered a JMSException - resetting the underlying JMS Connection
+
+jakarta.jms.JMSException: Failed to create session factory
+	at org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory.createConnectionInternal(ActiveMQConnectionFactory.java:891) ~[artemis-jakarta-client-2.31.2.jar!/:2.31.2]
+	at org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory.createConnection(ActiveMQConnectionFactory.java:290) ~[artemis-jakarta-client-2.31.2.jar!/:2.31.2]
+	at org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory.createConnection(ActiveMQConnectionFactory.java:285) ~[artemis-jakarta-client-2.31.2.jar!/:2.31.2]
+	at org.springframework.jms.connection.SingleConnectionFactory.doCreateConnection(SingleConnectionFactory.java:452) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.connection.SingleConnectionFactory.initConnection(SingleConnectionFactory.java:414) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.connection.SingleConnectionFactory.getConnection(SingleConnectionFactory.java:328) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.connection.SingleConnectionFactory.createConnection(SingleConnectionFactory.java:243) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.support.JmsAccessor.createConnection(JmsAccessor.java:211) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.AbstractJmsListeningContainer.createSharedConnection(AbstractJmsListeningContainer.java:405) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.AbstractJmsListeningContainer.refreshSharedConnection(AbstractJmsListeningContainer.java:390) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.DefaultMessageListenerContainer.refreshConnectionUntilSuccessful(DefaultMessageListenerContainer.java:1005) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.DefaultMessageListenerContainer.recoverAfterListenerSetupFailure(DefaultMessageListenerContainer.java:979) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.DefaultMessageListenerContainer$AsyncMessageListenerInvoker.run(DefaultMessageListenerContainer.java:1167) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+Caused by: org.apache.activemq.artemis.api.core.ActiveMQNotConnectedException: AMQ219007: Cannot connect to server(s). Tried with all available servers.
+	at org.apache.activemq.artemis.core.client.impl.ServerLocatorImpl.createSessionFactory(ServerLocatorImpl.java:726) ~[artemis-core-client-2.31.2.jar!/:2.31.2]
+	at org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory.createConnectionInternal(ActiveMQConnectionFactory.java:889) ~[artemis-jakarta-client-2.31.2.jar!/:2.31.2]
+	... 13 common frames omitted
+
+2026-02-24T09:44:53.451+02:00 ERROR 547708 --- [Toda] [ntContainer#0-1] o.s.j.l.DefaultMessageListenerContainer  : Could not refresh JMS Connection for destination 'otp-queue' - retrying using FixedBackOff{interval=5000, currentAttempts=17, maxAttempts=unlimited}. Cause: Failed to create session factory; nested exception is ActiveMQNotConnectedException[errorType=NOT_CONNECTED message=AMQ219007: Cannot connect to server(s). Tried with all available servers.]
+2026-02-24T09:44:58.453+02:00  INFO 547708 --- [Toda] [ntContainer#0-1] o.s.j.c.CachingConnectionFactory         : Encountered a JMSException - resetting the underlying JMS Connection
+
+jakarta.jms.JMSException: Failed to create session factory
+	at org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory.createConnectionInternal(ActiveMQConnectionFactory.java:891) ~[artemis-jakarta-client-2.31.2.jar!/:2.31.2]
+	at org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory.createConnection(ActiveMQConnectionFactory.java:290) ~[artemis-jakarta-client-2.31.2.jar!/:2.31.2]
+	at org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory.createConnection(ActiveMQConnectionFactory.java:285) ~[artemis-jakarta-client-2.31.2.jar!/:2.31.2]
+	at org.springframework.jms.connection.SingleConnectionFactory.doCreateConnection(SingleConnectionFactory.java:452) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.connection.SingleConnectionFactory.initConnection(SingleConnectionFactory.java:414) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.connection.SingleConnectionFactory.getConnection(SingleConnectionFactory.java:328) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.connection.SingleConnectionFactory.createConnection(SingleConnectionFactory.java:243) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.support.JmsAccessor.createConnection(JmsAccessor.java:211) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.AbstractJmsListeningContainer.createSharedConnection(AbstractJmsListeningContainer.java:405) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.AbstractJmsListeningContainer.refreshSharedConnection(AbstractJmsListeningContainer.java:390) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.DefaultMessageListenerContainer.refreshConnectionUntilSuccessful(DefaultMessageListenerContainer.java:1005) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.DefaultMessageListenerContainer.recoverAfterListenerSetupFailure(DefaultMessageListenerContainer.java:979) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.DefaultMessageListenerContainer$AsyncMessageListenerInvoker.run(DefaultMessageListenerContainer.java:1167) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+Caused by: org.apache.activemq.artemis.api.core.ActiveMQNotConnectedException: AMQ219007: Cannot connect to server(s). Tried with all available servers.
+	at org.apache.activemq.artemis.core.client.impl.ServerLocatorImpl.createSessionFactory(ServerLocatorImpl.java:726) ~[artemis-core-client-2.31.2.jar!/:2.31.2]
+	at org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory.createConnectionInternal(ActiveMQConnectionFactory.java:889) ~[artemis-jakarta-client-2.31.2.jar!/:2.31.2]
+	... 13 common frames omitted
+
+2026-02-24T09:44:58.454+02:00 ERROR 547708 --- [Toda] [ntContainer#0-1] o.s.j.l.DefaultMessageListenerContainer  : Could not refresh JMS Connection for destination 'otp-queue' - retrying using FixedBackOff{interval=5000, currentAttempts=18, maxAttempts=unlimited}. Cause: Failed to create session factory; nested exception is ActiveMQNotConnectedException[errorType=NOT_CONNECTED message=AMQ219007: Cannot connect to server(s). Tried with all available servers.]
+2026-02-24T09:45:03.456+02:00  INFO 547708 --- [Toda] [ntContainer#0-1] o.s.j.c.CachingConnectionFactory         : Encountered a JMSException - resetting the underlying JMS Connection
+
+jakarta.jms.JMSException: Failed to create session factory
+	at org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory.createConnectionInternal(ActiveMQConnectionFactory.java:891) ~[artemis-jakarta-client-2.31.2.jar!/:2.31.2]
+	at org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory.createConnection(ActiveMQConnectionFactory.java:290) ~[artemis-jakarta-client-2.31.2.jar!/:2.31.2]
+	at org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory.createConnection(ActiveMQConnectionFactory.java:285) ~[artemis-jakarta-client-2.31.2.jar!/:2.31.2]
+	at org.springframework.jms.connection.SingleConnectionFactory.doCreateConnection(SingleConnectionFactory.java:452) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.connection.SingleConnectionFactory.initConnection(SingleConnectionFactory.java:414) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.connection.SingleConnectionFactory.getConnection(SingleConnectionFactory.java:328) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.connection.SingleConnectionFactory.createConnection(SingleConnectionFactory.java:243) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.support.JmsAccessor.createConnection(JmsAccessor.java:211) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.AbstractJmsListeningContainer.createSharedConnection(AbstractJmsListeningContainer.java:405) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.AbstractJmsListeningContainer.refreshSharedConnection(AbstractJmsListeningContainer.java:390) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.DefaultMessageListenerContainer.refreshConnectionUntilSuccessful(DefaultMessageListenerContainer.java:1005) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.DefaultMessageListenerContainer.recoverAfterListenerSetupFailure(DefaultMessageListenerContainer.java:979) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.DefaultMessageListenerContainer$AsyncMessageListenerInvoker.run(DefaultMessageListenerContainer.java:1167) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+Caused by: org.apache.activemq.artemis.api.core.ActiveMQNotConnectedException: AMQ219007: Cannot connect to server(s). Tried with all available servers.
+	at org.apache.activemq.artemis.core.client.impl.ServerLocatorImpl.createSessionFactory(ServerLocatorImpl.java:726) ~[artemis-core-client-2.31.2.jar!/:2.31.2]
+	at org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory.createConnectionInternal(ActiveMQConnectionFactory.java:889) ~[artemis-jakarta-client-2.31.2.jar!/:2.31.2]
+	... 13 common frames omitted
+
+2026-02-24T09:45:03.457+02:00 ERROR 547708 --- [Toda] [ntContainer#0-1] o.s.j.l.DefaultMessageListenerContainer  : Could not refresh JMS Connection for destination 'otp-queue' - retrying using FixedBackOff{interval=5000, currentAttempts=19, maxAttempts=unlimited}. Cause: Failed to create session factory; nested exception is ActiveMQNotConnectedException[errorType=NOT_CONNECTED message=AMQ219007: Cannot connect to server(s). Tried with all available servers.]
+2026-02-24T09:45:08.009+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Trying to match request against DefaultSecurityFilterChain [RequestMatcher=Mvc [pattern='/v3/api-docs/**'], Filters=[]] (1/7)
+2026-02-24T09:45:08.010+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Trying to match request against DefaultSecurityFilterChain [RequestMatcher=Mvc [pattern='/v3/api-docs.yaml'], Filters=[]] (2/7)
+2026-02-24T09:45:08.010+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Trying to match request against DefaultSecurityFilterChain [RequestMatcher=Mvc [pattern='/swagger-ui/**'], Filters=[]] (3/7)
+2026-02-24T09:45:08.010+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Trying to match request against DefaultSecurityFilterChain [RequestMatcher=Mvc [pattern='/swagger-ui.html'], Filters=[]] (4/7)
+2026-02-24T09:45:08.010+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Trying to match request against DefaultSecurityFilterChain [RequestMatcher=Mvc [pattern='/webjars/**'], Filters=[]] (5/7)
+2026-02-24T09:45:08.010+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Trying to match request against DefaultSecurityFilterChain [RequestMatcher=Mvc [pattern='/swagger-resources/**'], Filters=[]] (6/7)
+2026-02-24T09:45:08.010+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Trying to match request against DefaultSecurityFilterChain [RequestMatcher=any request, Filters=[org.springframework.security.web.session.DisableEncodeUrlFilter@4fd9deed, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@75ad7531, org.springframework.security.web.context.SecurityContextHolderFilter@15d41953, org.springframework.security.web.header.HeaderWriterFilter@534f4a65, org.springframework.web.filter.CorsFilter@4d619aa0, org.springframework.security.web.authentication.logout.LogoutFilter@23e95661, com.example.Toda.security.JwtAuthenticationFilter@35217e0, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@248e31a1, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2eb6a77f, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@79378802, org.springframework.security.web.session.SessionManagementFilter@64f3f849, org.springframework.security.web.access.ExceptionTranslationFilter@10e7ade5, org.springframework.security.web.access.intercept.AuthorizationFilter@7b6824db]] (7/7)
+2026-02-24T09:45:08.010+02:00 DEBUG 547708 --- [Toda] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Securing POST /api/tourguide/profile/tour-details
+2026-02-24T09:45:08.010+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Invoking DisableEncodeUrlFilter (1/13)
+2026-02-24T09:45:08.011+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Invoking WebAsyncManagerIntegrationFilter (2/13)
+2026-02-24T09:45:08.011+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Invoking SecurityContextHolderFilter (3/13)
+2026-02-24T09:45:08.011+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Invoking HeaderWriterFilter (4/13)
+2026-02-24T09:45:08.011+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Invoking CorsFilter (5/13)
+2026-02-24T09:45:08.011+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Invoking LogoutFilter (6/13)
+2026-02-24T09:45:08.011+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-6] o.s.s.w.a.logout.LogoutFilter            : Did not match request to Or [Ant [pattern='/logout', GET], Ant [pattern='/logout', POST], Ant [pattern='/logout', PUT], Ant [pattern='/logout', DELETE]]
+2026-02-24T09:45:08.011+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Invoking JwtAuthenticationFilter (7/13)
+2026-02-24T09:45:08.014+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-6] .s.s.w.c.SupplierDeferredSecurityContext : Created SecurityContextImpl [Null authentication]
+Hibernate: select ue1_0.id,ue1_0.password,ue1_0.user_name,ue1_0.email,ue1_0.role from _user ue1_0 where ue1_0.email=?
+Hibernate: select tge1_0.user_id,tge1_0.city,tge1_0.covered_area,tge1_0.email,tge1_0.guide_type,tge1_0.id_document,tge1_0.license,tge1_0.licensed_number,tge1_0.name,tge1_0.phone,tge1_0.max,tge1_0.min,tge1_0.profile_photo,tge1_0.tour_duration,tge1_0.tour_type,tge1_0.type,u1_0.id,u1_0.password,u1_0.user_name,u1_0.email,u1_0.role,tp1_0.user_id,tp1_0.destination_city,tp1_0.email,tp1_0.mother_language,tp1_0.name,tp1_0.nationality,tp1_0.notes,tp1_0.number_of_travelers,tp1_0.travel_date_from,tp1_0.travel_date_to,tp1_0.trip_type,tp1_0.type,tge1_0.years_of_experience from tour_guide tge1_0 join _user u1_0 on u1_0.id=tge1_0.user_id left join tourist_profile tp1_0 on u1_0.id=tp1_0.user_id where tge1_0.user_id=?
+Hibernate: select tpe1_0.user_id,tpe1_0.destination_city,tpe1_0.email,tpe1_0.mother_language,tpe1_0.name,tpe1_0.nationality,tpe1_0.notes,tpe1_0.number_of_travelers,tpe1_0.travel_date_from,tpe1_0.travel_date_to,tpe1_0.trip_type,tpe1_0.type,u1_0.id,u1_0.password,u1_0.user_name,u1_0.email,u1_0.role,tg1_0.user_id,tg1_0.city,tg1_0.covered_area,tg1_0.email,tg1_0.guide_type,tg1_0.id_document,tg1_0.license,tg1_0.licensed_number,tg1_0.name,tg1_0.phone,tg1_0.max,tg1_0.min,tg1_0.profile_photo,tg1_0.tour_duration,tg1_0.tour_type,tg1_0.type,tg1_0.years_of_experience from tourist_profile tpe1_0 join _user u1_0 on u1_0.id=tpe1_0.user_id left join tour_guide tg1_0 on u1_0.id=tg1_0.user_id where tpe1_0.user_id=?
+2026-02-24T09:45:08.033+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Invoking RequestCacheAwareFilter (8/13)
+2026-02-24T09:45:08.033+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Invoking SecurityContextHolderAwareRequestFilter (9/13)
+2026-02-24T09:45:08.033+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Invoking AnonymousAuthenticationFilter (10/13)
+2026-02-24T09:45:08.033+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Invoking SessionManagementFilter (11/13)
+2026-02-24T09:45:08.033+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Did not set SecurityContextHolder since already authenticated UsernamePasswordAuthenticationToken [Principal=com.example.Toda.Entity.UserPrincipal@12e590de, Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=0:0:0:0:0:0:0:1, SessionId=null], Granted Authorities=[ROLE_TOURGUIDE]]
+2026-02-24T09:45:08.034+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-6] s.CompositeSessionAuthenticationStrategy : Preparing session with ChangeSessionIdAuthenticationStrategy (1/1)
+2026-02-24T09:45:08.034+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Invoking ExceptionTranslationFilter (12/13)
+2026-02-24T09:45:08.034+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Invoking AuthorizationFilter (13/13)
+2026-02-24T09:45:08.034+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-6] estMatcherDelegatingAuthorizationManager : Authorizing SecurityContextHolderAwareRequestWrapper[ org.springframework.security.web.header.HeaderWriterFilter$HeaderWriterRequest@19fb5f34]
+2026-02-24T09:45:08.034+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-6] estMatcherDelegatingAuthorizationManager : Checking authorization on SecurityContextHolderAwareRequestWrapper[ org.springframework.security.web.header.HeaderWriterFilter$HeaderWriterRequest@19fb5f34] using AuthorityAuthorizationManager[authorities=[ROLE_ADMIN, ROLE_TOURGUIDE]]
+2026-02-24T09:45:08.034+02:00 DEBUG 547708 --- [Toda] [nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Secured POST /api/tourguide/profile/tour-details
+Hibernate: select tge1_0.user_id,tge1_0.city,tge1_0.covered_area,tge1_0.email,tge1_0.guide_type,tge1_0.id_document,tge1_0.license,tge1_0.licensed_number,tge1_0.name,tge1_0.phone,tge1_0.max,tge1_0.min,tge1_0.profile_photo,tge1_0.tour_duration,tge1_0.tour_type,tge1_0.type,tge1_0.years_of_experience from tour_guide tge1_0 where tge1_0.email=?
+Hibernate: select ue1_0.id,ue1_0.password,ue1_0.user_name,ue1_0.email,ue1_0.role,tg1_0.user_id,tg1_0.city,tg1_0.covered_area,tg1_0.email,tg1_0.guide_type,tg1_0.id_document,tg1_0.license,tg1_0.licensed_number,tg1_0.name,tg1_0.phone,tg1_0.max,tg1_0.min,tg1_0.profile_photo,tg1_0.tour_duration,tg1_0.tour_type,tg1_0.type,tg1_0.years_of_experience,tp1_0.user_id,tp1_0.destination_city,tp1_0.email,tp1_0.mother_language,tp1_0.name,tp1_0.nationality,tp1_0.notes,tp1_0.number_of_travelers,tp1_0.travel_date_from,tp1_0.travel_date_to,tp1_0.trip_type,tp1_0.type from _user ue1_0 left join tour_guide tg1_0 on ue1_0.id=tg1_0.user_id left join tourist_profile tp1_0 on ue1_0.id=tp1_0.user_id where ue1_0.id=?
+Hibernate: update tour_guide set city=?,covered_area=?,email=?,guide_type=?,id_document=?,license=?,licensed_number=?,name=?,phone=?,max=?,min=?,profile_photo=?,tour_duration=?,tour_type=?,type=?,years_of_experience=? where user_id=?
+2026-02-24T09:45:08.099+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-6] o.s.s.w.header.writers.HstsHeaderWriter  : Not injecting HSTS header since it did not match request to [Is Secure]
+2026-02-24T09:45:08.459+02:00  INFO 547708 --- [Toda] [ntContainer#0-1] o.s.j.c.CachingConnectionFactory         : Encountered a JMSException - resetting the underlying JMS Connection
+
+jakarta.jms.JMSException: Failed to create session factory
+	at org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory.createConnectionInternal(ActiveMQConnectionFactory.java:891) ~[artemis-jakarta-client-2.31.2.jar!/:2.31.2]
+	at org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory.createConnection(ActiveMQConnectionFactory.java:290) ~[artemis-jakarta-client-2.31.2.jar!/:2.31.2]
+	at org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory.createConnection(ActiveMQConnectionFactory.java:285) ~[artemis-jakarta-client-2.31.2.jar!/:2.31.2]
+	at org.springframework.jms.connection.SingleConnectionFactory.doCreateConnection(SingleConnectionFactory.java:452) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.connection.SingleConnectionFactory.initConnection(SingleConnectionFactory.java:414) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.connection.SingleConnectionFactory.getConnection(SingleConnectionFactory.java:328) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.connection.SingleConnectionFactory.createConnection(SingleConnectionFactory.java:243) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.support.JmsAccessor.createConnection(JmsAccessor.java:211) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.AbstractJmsListeningContainer.createSharedConnection(AbstractJmsListeningContainer.java:405) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.AbstractJmsListeningContainer.refreshSharedConnection(AbstractJmsListeningContainer.java:390) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.DefaultMessageListenerContainer.refreshConnectionUntilSuccessful(DefaultMessageListenerContainer.java:1005) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.DefaultMessageListenerContainer.recoverAfterListenerSetupFailure(DefaultMessageListenerContainer.java:979) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.DefaultMessageListenerContainer$AsyncMessageListenerInvoker.run(DefaultMessageListenerContainer.java:1167) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+Caused by: org.apache.activemq.artemis.api.core.ActiveMQNotConnectedException: AMQ219007: Cannot connect to server(s). Tried with all available servers.
+	at org.apache.activemq.artemis.core.client.impl.ServerLocatorImpl.createSessionFactory(ServerLocatorImpl.java:726) ~[artemis-core-client-2.31.2.jar!/:2.31.2]
+	at org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory.createConnectionInternal(ActiveMQConnectionFactory.java:889) ~[artemis-jakarta-client-2.31.2.jar!/:2.31.2]
+	... 13 common frames omitted
+
+2026-02-24T09:45:08.460+02:00 ERROR 547708 --- [Toda] [ntContainer#0-1] o.s.j.l.DefaultMessageListenerContainer  : Could not refresh JMS Connection for destination 'otp-queue' - retrying using FixedBackOff{interval=5000, currentAttempts=20, maxAttempts=unlimited}. Cause: Failed to create session factory; nested exception is ActiveMQNotConnectedException[errorType=NOT_CONNECTED message=AMQ219007: Cannot connect to server(s). Tried with all available servers.]
+2026-02-24T09:45:12.250+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Trying to match request against DefaultSecurityFilterChain [RequestMatcher=Mvc [pattern='/v3/api-docs/**'], Filters=[]] (1/7)
+2026-02-24T09:45:12.251+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Trying to match request against DefaultSecurityFilterChain [RequestMatcher=Mvc [pattern='/v3/api-docs.yaml'], Filters=[]] (2/7)
+2026-02-24T09:45:12.251+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Trying to match request against DefaultSecurityFilterChain [RequestMatcher=Mvc [pattern='/swagger-ui/**'], Filters=[]] (3/7)
+2026-02-24T09:45:12.251+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Trying to match request against DefaultSecurityFilterChain [RequestMatcher=Mvc [pattern='/swagger-ui.html'], Filters=[]] (4/7)
+2026-02-24T09:45:12.252+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Trying to match request against DefaultSecurityFilterChain [RequestMatcher=Mvc [pattern='/webjars/**'], Filters=[]] (5/7)
+2026-02-24T09:45:12.252+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Trying to match request against DefaultSecurityFilterChain [RequestMatcher=Mvc [pattern='/swagger-resources/**'], Filters=[]] (6/7)
+2026-02-24T09:45:12.252+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Trying to match request against DefaultSecurityFilterChain [RequestMatcher=any request, Filters=[org.springframework.security.web.session.DisableEncodeUrlFilter@4fd9deed, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@75ad7531, org.springframework.security.web.context.SecurityContextHolderFilter@15d41953, org.springframework.security.web.header.HeaderWriterFilter@534f4a65, org.springframework.web.filter.CorsFilter@4d619aa0, org.springframework.security.web.authentication.logout.LogoutFilter@23e95661, com.example.Toda.security.JwtAuthenticationFilter@35217e0, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@248e31a1, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2eb6a77f, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@79378802, org.springframework.security.web.session.SessionManagementFilter@64f3f849, org.springframework.security.web.access.ExceptionTranslationFilter@10e7ade5, org.springframework.security.web.access.intercept.AuthorizationFilter@7b6824db]] (7/7)
+2026-02-24T09:45:12.252+02:00 DEBUG 547708 --- [Toda] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /api/auth/me
+2026-02-24T09:45:12.253+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Invoking DisableEncodeUrlFilter (1/13)
+2026-02-24T09:45:12.253+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Invoking WebAsyncManagerIntegrationFilter (2/13)
+2026-02-24T09:45:12.253+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Invoking SecurityContextHolderFilter (3/13)
+2026-02-24T09:45:12.253+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Invoking HeaderWriterFilter (4/13)
+2026-02-24T09:45:12.254+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Invoking CorsFilter (5/13)
+2026-02-24T09:45:12.254+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Invoking LogoutFilter (6/13)
+2026-02-24T09:45:12.254+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-7] o.s.s.w.a.logout.LogoutFilter            : Did not match request to Or [Ant [pattern='/logout', GET], Ant [pattern='/logout', POST], Ant [pattern='/logout', PUT], Ant [pattern='/logout', DELETE]]
+2026-02-24T09:45:12.255+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Invoking JwtAuthenticationFilter (7/13)
+2026-02-24T09:45:12.262+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-7] .s.s.w.c.SupplierDeferredSecurityContext : Created SecurityContextImpl [Null authentication]
+Hibernate: select ue1_0.id,ue1_0.password,ue1_0.user_name,ue1_0.email,ue1_0.role from _user ue1_0 where ue1_0.email=?
+Hibernate: select tge1_0.user_id,tge1_0.city,tge1_0.covered_area,tge1_0.email,tge1_0.guide_type,tge1_0.id_document,tge1_0.license,tge1_0.licensed_number,tge1_0.name,tge1_0.phone,tge1_0.max,tge1_0.min,tge1_0.profile_photo,tge1_0.tour_duration,tge1_0.tour_type,tge1_0.type,u1_0.id,u1_0.password,u1_0.user_name,u1_0.email,u1_0.role,tp1_0.user_id,tp1_0.destination_city,tp1_0.email,tp1_0.mother_language,tp1_0.name,tp1_0.nationality,tp1_0.notes,tp1_0.number_of_travelers,tp1_0.travel_date_from,tp1_0.travel_date_to,tp1_0.trip_type,tp1_0.type,tge1_0.years_of_experience from tour_guide tge1_0 join _user u1_0 on u1_0.id=tge1_0.user_id left join tourist_profile tp1_0 on u1_0.id=tp1_0.user_id where tge1_0.user_id=?
+Hibernate: select tpe1_0.user_id,tpe1_0.destination_city,tpe1_0.email,tpe1_0.mother_language,tpe1_0.name,tpe1_0.nationality,tpe1_0.notes,tpe1_0.number_of_travelers,tpe1_0.travel_date_from,tpe1_0.travel_date_to,tpe1_0.trip_type,tpe1_0.type,u1_0.id,u1_0.password,u1_0.user_name,u1_0.email,u1_0.role,tg1_0.user_id,tg1_0.city,tg1_0.covered_area,tg1_0.email,tg1_0.guide_type,tg1_0.id_document,tg1_0.license,tg1_0.licensed_number,tg1_0.name,tg1_0.phone,tg1_0.max,tg1_0.min,tg1_0.profile_photo,tg1_0.tour_duration,tg1_0.tour_type,tg1_0.type,tg1_0.years_of_experience from tourist_profile tpe1_0 join _user u1_0 on u1_0.id=tpe1_0.user_id left join tour_guide tg1_0 on u1_0.id=tg1_0.user_id where tpe1_0.user_id=?
+2026-02-24T09:45:12.278+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Invoking RequestCacheAwareFilter (8/13)
+2026-02-24T09:45:12.278+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Invoking SecurityContextHolderAwareRequestFilter (9/13)
+2026-02-24T09:45:12.278+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Invoking AnonymousAuthenticationFilter (10/13)
+2026-02-24T09:45:12.279+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Invoking SessionManagementFilter (11/13)
+2026-02-24T09:45:12.279+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Did not set SecurityContextHolder since already authenticated UsernamePasswordAuthenticationToken [Principal=com.example.Toda.Entity.UserPrincipal@efcc829, Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=0:0:0:0:0:0:0:1, SessionId=null], Granted Authorities=[ROLE_TOURGUIDE]]
+2026-02-24T09:45:12.279+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-7] s.CompositeSessionAuthenticationStrategy : Preparing session with ChangeSessionIdAuthenticationStrategy (1/1)
+2026-02-24T09:45:12.279+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Invoking ExceptionTranslationFilter (12/13)
+2026-02-24T09:45:12.279+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Invoking AuthorizationFilter (13/13)
+2026-02-24T09:45:12.279+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-7] estMatcherDelegatingAuthorizationManager : Authorizing SecurityContextHolderAwareRequestWrapper[ org.springframework.security.web.header.HeaderWriterFilter$HeaderWriterRequest@3baeec56]
+2026-02-24T09:45:12.279+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-7] estMatcherDelegatingAuthorizationManager : Checking authorization on SecurityContextHolderAwareRequestWrapper[ org.springframework.security.web.header.HeaderWriterFilter$HeaderWriterRequest@3baeec56] using org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer$$Lambda$1510/0x000072a420a83178@9a4d122
+2026-02-24T09:45:12.279+02:00 DEBUG 547708 --- [Toda] [nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Secured GET /api/auth/me
+Hibernate: select ue1_0.id,ue1_0.password,ue1_0.user_name,ue1_0.email,ue1_0.role from _user ue1_0 where ue1_0.email=?
+Hibernate: select tge1_0.user_id,tge1_0.city,tge1_0.covered_area,tge1_0.email,tge1_0.guide_type,tge1_0.id_document,tge1_0.license,tge1_0.licensed_number,tge1_0.name,tge1_0.phone,tge1_0.max,tge1_0.min,tge1_0.profile_photo,tge1_0.tour_duration,tge1_0.tour_type,tge1_0.type,u1_0.id,u1_0.password,u1_0.user_name,u1_0.email,u1_0.role,tp1_0.user_id,tp1_0.destination_city,tp1_0.email,tp1_0.mother_language,tp1_0.name,tp1_0.nationality,tp1_0.notes,tp1_0.number_of_travelers,tp1_0.travel_date_from,tp1_0.travel_date_to,tp1_0.trip_type,tp1_0.type,tge1_0.years_of_experience from tour_guide tge1_0 join _user u1_0 on u1_0.id=tge1_0.user_id left join tourist_profile tp1_0 on u1_0.id=tp1_0.user_id where tge1_0.user_id=?
+Hibernate: select tpe1_0.user_id,tpe1_0.destination_city,tpe1_0.email,tpe1_0.mother_language,tpe1_0.name,tpe1_0.nationality,tpe1_0.notes,tpe1_0.number_of_travelers,tpe1_0.travel_date_from,tpe1_0.travel_date_to,tpe1_0.trip_type,tpe1_0.type,u1_0.id,u1_0.password,u1_0.user_name,u1_0.email,u1_0.role,tg1_0.user_id,tg1_0.city,tg1_0.covered_area,tg1_0.email,tg1_0.guide_type,tg1_0.id_document,tg1_0.license,tg1_0.licensed_number,tg1_0.name,tg1_0.phone,tg1_0.max,tg1_0.min,tg1_0.profile_photo,tg1_0.tour_duration,tg1_0.tour_type,tg1_0.type,tg1_0.years_of_experience from tourist_profile tpe1_0 join _user u1_0 on u1_0.id=tpe1_0.user_id left join tour_guide tg1_0 on u1_0.id=tg1_0.user_id where tpe1_0.user_id=?
+Hibernate: select tge1_0.user_id,tge1_0.city,tge1_0.covered_area,tge1_0.email,tge1_0.guide_type,tge1_0.id_document,tge1_0.license,tge1_0.licensed_number,tge1_0.name,tge1_0.phone,tge1_0.max,tge1_0.min,tge1_0.profile_photo,tge1_0.tour_duration,tge1_0.tour_type,tge1_0.type,tge1_0.years_of_experience from tour_guide tge1_0 where tge1_0.email=?
+Hibernate: select l1_0.tour_guide_id,l1_0.language,l1_0.level from tour_guide_languages l1_0 where l1_0.tour_guide_id=?
+2026-02-24T09:45:12.297+02:00 TRACE 547708 --- [Toda] [nio-8080-exec-7] o.s.s.w.header.writers.HstsHeaderWriter  : Not injecting HSTS header since it did not match request to [Is Secure]
+2026-02-24T09:45:13.462+02:00  INFO 547708 --- [Toda] [ntContainer#0-1] o.s.j.c.CachingConnectionFactory         : Encountered a JMSException - resetting the underlying JMS Connection
+
+jakarta.jms.JMSException: Failed to create session factory
+	at org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory.createConnectionInternal(ActiveMQConnectionFactory.java:891) ~[artemis-jakarta-client-2.31.2.jar!/:2.31.2]
+	at org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory.createConnection(ActiveMQConnectionFactory.java:290) ~[artemis-jakarta-client-2.31.2.jar!/:2.31.2]
+	at org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory.createConnection(ActiveMQConnectionFactory.java:285) ~[artemis-jakarta-client-2.31.2.jar!/:2.31.2]
+	at org.springframework.jms.connection.SingleConnectionFactory.doCreateConnection(SingleConnectionFactory.java:452) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.connection.SingleConnectionFactory.initConnection(SingleConnectionFactory.java:414) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.connection.SingleConnectionFactory.getConnection(SingleConnectionFactory.java:328) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.connection.SingleConnectionFactory.createConnection(SingleConnectionFactory.java:243) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.support.JmsAccessor.createConnection(JmsAccessor.java:211) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.AbstractJmsListeningContainer.createSharedConnection(AbstractJmsListeningContainer.java:405) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.AbstractJmsListeningContainer.refreshSharedConnection(AbstractJmsListeningContainer.java:390) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.DefaultMessageListenerContainer.refreshConnectionUntilSuccessful(DefaultMessageListenerContainer.java:1005) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.DefaultMessageListenerContainer.recoverAfterListenerSetupFailure(DefaultMessageListenerContainer.java:979) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.DefaultMessageListenerContainer$AsyncMessageListenerInvoker.run(DefaultMessageListenerContainer.java:1167) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+Caused by: org.apache.activemq.artemis.api.core.ActiveMQNotConnectedException: AMQ219007: Cannot connect to server(s). Tried with all available servers.
+	at org.apache.activemq.artemis.core.client.impl.ServerLocatorImpl.createSessionFactory(ServerLocatorImpl.java:726) ~[artemis-core-client-2.31.2.jar!/:2.31.2]
+	at org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory.createConnectionInternal(ActiveMQConnectionFactory.java:889) ~[artemis-jakarta-client-2.31.2.jar!/:2.31.2]
+	... 13 common frames omitted
+
+2026-02-24T09:45:13.463+02:00 ERROR 547708 --- [Toda] [ntContainer#0-1] o.s.j.l.DefaultMessageListenerContainer  : Could not refresh JMS Connection for destination 'otp-queue' - retrying using FixedBackOff{interval=5000, currentAttempts=21, maxAttempts=unlimited}. Cause: Failed to create session factory; nested exception is ActiveMQNotConnectedException[errorType=NOT_CONNECTED message=AMQ219007: Cannot connect to server(s). Tried with all available servers.]
+2026-02-24T09:45:18.464+02:00  INFO 547708 --- [Toda] [ntContainer#0-1] o.s.j.c.CachingConnectionFactory         : Encountered a JMSException - resetting the underlying JMS Connection
+
+jakarta.jms.JMSException: Failed to create session factory
+	at org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory.createConnectionInternal(ActiveMQConnectionFactory.java:891) ~[artemis-jakarta-client-2.31.2.jar!/:2.31.2]
+	at org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory.createConnection(ActiveMQConnectionFactory.java:290) ~[artemis-jakarta-client-2.31.2.jar!/:2.31.2]
+	at org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory.createConnection(ActiveMQConnectionFactory.java:285) ~[artemis-jakarta-client-2.31.2.jar!/:2.31.2]
+	at org.springframework.jms.connection.SingleConnectionFactory.doCreateConnection(SingleConnectionFactory.java:452) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.connection.SingleConnectionFactory.initConnection(SingleConnectionFactory.java:414) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.connection.SingleConnectionFactory.getConnection(SingleConnectionFactory.java:328) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.connection.SingleConnectionFactory.createConnection(SingleConnectionFactory.java:243) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.support.JmsAccessor.createConnection(JmsAccessor.java:211) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.AbstractJmsListeningContainer.createSharedConnection(AbstractJmsListeningContainer.java:405) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.AbstractJmsListeningContainer.refreshSharedConnection(AbstractJmsListeningContainer.java:390) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.DefaultMessageListenerContainer.refreshConnectionUntilSuccessful(DefaultMessageListenerContainer.java:1005) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.DefaultMessageListenerContainer.recoverAfterListenerSetupFailure(DefaultMessageListenerContainer.java:979) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.DefaultMessageListenerContainer$AsyncMessageListenerInvoker.run(DefaultMessageListenerContainer.java:1167) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+Caused by: org.apache.activemq.artemis.api.core.ActiveMQNotConnectedException: AMQ219007: Cannot connect to server(s). Tried with all available servers.
+	at org.apache.activemq.artemis.core.client.impl.ServerLocatorImpl.createSessionFactory(ServerLocatorImpl.java:726) ~[artemis-core-client-2.31.2.jar!/:2.31.2]
+	at org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory.createConnectionInternal(ActiveMQConnectionFactory.java:889) ~[artemis-jakarta-client-2.31.2.jar!/:2.31.2]
+	... 13 common frames omitted
+
+2026-02-24T09:45:18.465+02:00 ERROR 547708 --- [Toda] [ntContainer#0-1] o.s.j.l.DefaultMessageListenerContainer  : Could not refresh JMS Connection for destination 'otp-queue' - retrying using FixedBackOff{interval=5000, currentAttempts=22, maxAttempts=unlimited}. Cause: Failed to create session factory; nested exception is ActiveMQNotConnectedException[errorType=NOT_CONNECTED message=AMQ219007: Cannot connect to server(s). Tried with all available servers.]
+2026-02-24T09:45:23.467+02:00  INFO 547708 --- [Toda] [ntContainer#0-1] o.s.j.c.CachingConnectionFactory         : Encountered a JMSException - resetting the underlying JMS Connection
+
+jakarta.jms.JMSException: Failed to create session factory
+	at org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory.createConnectionInternal(ActiveMQConnectionFactory.java:891) ~[artemis-jakarta-client-2.31.2.jar!/:2.31.2]
+	at org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory.createConnection(ActiveMQConnectionFactory.java:290) ~[artemis-jakarta-client-2.31.2.jar!/:2.31.2]
+	at org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory.createConnection(ActiveMQConnectionFactory.java:285) ~[artemis-jakarta-client-2.31.2.jar!/:2.31.2]
+	at org.springframework.jms.connection.SingleConnectionFactory.doCreateConnection(SingleConnectionFactory.java:452) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.connection.SingleConnectionFactory.initConnection(SingleConnectionFactory.java:414) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.connection.SingleConnectionFactory.getConnection(SingleConnectionFactory.java:328) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.connection.SingleConnectionFactory.createConnection(SingleConnectionFactory.java:243) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.support.JmsAccessor.createConnection(JmsAccessor.java:211) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.AbstractJmsListeningContainer.createSharedConnection(AbstractJmsListeningContainer.java:405) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.AbstractJmsListeningContainer.refreshSharedConnection(AbstractJmsListeningContainer.java:390) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.DefaultMessageListenerContainer.refreshConnectionUntilSuccessful(DefaultMessageListenerContainer.java:1005) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.DefaultMessageListenerContainer.recoverAfterListenerSetupFailure(DefaultMessageListenerContainer.java:979) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.DefaultMessageListenerContainer$AsyncMessageListenerInvoker.run(DefaultMessageListenerContainer.java:1167) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+Caused by: org.apache.activemq.artemis.api.core.ActiveMQNotConnectedException: AMQ219007: Cannot connect to server(s). Tried with all available servers.
+	at org.apache.activemq.artemis.core.client.impl.ServerLocatorImpl.createSessionFactory(ServerLocatorImpl.java:726) ~[artemis-core-client-2.31.2.jar!/:2.31.2]
+	at org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory.createConnectionInternal(ActiveMQConnectionFactory.java:889) ~[artemis-jakarta-client-2.31.2.jar!/:2.31.2]
+	... 13 common frames omitted
+
+2026-02-24T09:45:23.468+02:00 ERROR 547708 --- [Toda] [ntContainer#0-1] o.s.j.l.DefaultMessageListenerContainer  : Could not refresh JMS Connection for destination 'otp-queue' - retrying using FixedBackOff{interval=5000, currentAttempts=23, maxAttempts=unlimited}. Cause: Failed to create session factory; nested exception is ActiveMQNotConnectedException[errorType=NOT_CONNECTED message=AMQ219007: Cannot connect to server(s). Tried with all available servers.]
+2026-02-24T09:45:28.470+02:00  INFO 547708 --- [Toda] [ntContainer#0-1] o.s.j.c.CachingConnectionFactory         : Encountered a JMSException - resetting the underlying JMS Connection
+
+jakarta.jms.JMSException: Failed to create session factory
+	at org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory.createConnectionInternal(ActiveMQConnectionFactory.java:891) ~[artemis-jakarta-client-2.31.2.jar!/:2.31.2]
+	at org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory.createConnection(ActiveMQConnectionFactory.java:290) ~[artemis-jakarta-client-2.31.2.jar!/:2.31.2]
+	at org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory.createConnection(ActiveMQConnectionFactory.java:285) ~[artemis-jakarta-client-2.31.2.jar!/:2.31.2]
+	at org.springframework.jms.connection.SingleConnectionFactory.doCreateConnection(SingleConnectionFactory.java:452) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.connection.SingleConnectionFactory.initConnection(SingleConnectionFactory.java:414) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.connection.SingleConnectionFactory.getConnection(SingleConnectionFactory.java:328) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.connection.SingleConnectionFactory.createConnection(SingleConnectionFactory.java:243) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.support.JmsAccessor.createConnection(JmsAccessor.java:211) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.AbstractJmsListeningContainer.createSharedConnection(AbstractJmsListeningContainer.java:405) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.AbstractJmsListeningContainer.refreshSharedConnection(AbstractJmsListeningContainer.java:390) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.DefaultMessageListenerContainer.refreshConnectionUntilSuccessful(DefaultMessageListenerContainer.java:1005) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.DefaultMessageListenerContainer.recoverAfterListenerSetupFailure(DefaultMessageListenerContainer.java:979) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at org.springframework.jms.listener.DefaultMessageListenerContainer$AsyncMessageListenerInvoker.run(DefaultMessageListenerContainer.java:1167) ~[spring-jms-6.1.4.jar!/:6.1.4]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+Caused by: org.apache.activemq.artemis.api.core.ActiveMQNotConnectedException: AMQ219007: Cannot connect to server(s). Tried with all available servers.
+	at org.apache.activemq.artemis.core.client.impl.ServerLocatorImpl.createSessionFactory(ServerLocatorImpl.java:726) ~[artemis-core-client-2.31.2.jar!/:2.31.2]
+	at org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory.createConnectionInternal(ActiveMQConnectionFactory.java:889) ~[artemis-jakarta-client-2.31.2.jar!/:2.31.2]
+	... 13 common frames omitted
+
+2026-02-24T09:45:28.471+02:00 ERROR 547708 --- [Toda] [ntContainer#0-1] o.s.j.l.DefaultMessageListenerContainer  : Could not refresh JMS Connection for destination 'otp-queue' - retrying using FixedBackOff{interval=5000, currentAttempts=24, maxAttempts=unlimited}. Cause: Failed to create session factory; nested exception is ActiveMQNotConnectedException[errorType=NOT_CONNECTED message=AMQ219007: Cannot connect to server(s). Tried with all available servers.]
