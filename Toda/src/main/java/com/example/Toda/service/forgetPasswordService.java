@@ -11,8 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
-import static org.springframework.boot.autoconfigure.container.ContainerImageMetadata.isPresent;
-
 @Service
 public class forgetPasswordService {
     private final UserRepo userRepo;
