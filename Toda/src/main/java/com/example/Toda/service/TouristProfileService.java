@@ -1,14 +1,15 @@
-/*
 package com.example.Toda.service;
 
-import com.example.Toda.DTO.TouristProfileRequest;
-import com.example.Toda.DTO.TouristProfileResponse;
+import com.example.Toda.DTO.*;
 import com.example.Toda.Entity.TouristProfileEntity;
+import com.example.Toda.Entity.UserEntity;
 import com.example.Toda.exception.TouristNotFoundException;
 import com.example.Toda.repo.TouristProfileRepo;
+import com.example.Toda.repo.UserRepo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,113 +18,249 @@ import java.util.stream.Collectors;
 public class TouristProfileService {
 
     private final TouristProfileRepo touristProfileRepo;
+    private final UserRepo userRepo;
+    private final JWTService jwtService;
 
-    public TouristProfileService(TouristProfileRepo touristProfileRepo) {
+    public TouristProfileService(TouristProfileRepo touristProfileRepo, UserRepo userRepo, JWTService jwtService) {
         this.touristProfileRepo = touristProfileRepo;
+        this.userRepo = userRepo;
+        this.jwtService = jwtService;
     }
 
-    public TouristProfileResponse createProfile(TouristProfileRequest request) {
-        TouristProfileEntity profile = mapToEntity(request);
-        TouristProfileEntity savedProfile = touristProfileRepo.save(profile);
-        return mapToResponse(savedProfile);
+    // Step 1: Create Basic Profile
+    @Transactional
+    public void createBasicProfile(TouristBasicInfoRequest request, String token) {
+        String username = jwtService.extractUsername(token);
+        UserEntity user = userRepo.findByEmail(username)
+                .orElseThrow(() -> new TouristNotFoundException("User not found"));
+
+        TouristProfileEntity profile = touristProfileRepo.findByUserId(user.getId())
+                .orElse(new TouristProfileEntity());
+
+        profile.setUser(user);
+        profile.setName(request.name());
+        profile.setEmail(request.email());
+        profile.setType(TouristProfileEntity.TouristType.valueOf(request.type().toUpperCase()));
+        profile.setNationality(request.nationality());
+        profile.setMotherLanguage(request.motherLanguage());
+        profile.setLanguages(request.languages());
+
+        touristProfileRepo.save(profile);
     }
 
-    public TouristProfileResponse updateProfile(Long id, TouristProfileRequest request) {
-        TouristProfileEntity existingProfile = touristProfileRepo.findById(id)
-                .orElseThrow(() -> new TouristNotFoundException("Tourist profile not found with id: " + id));
+    // Step 1: Get Basic Profile
+    public TouristBasicInfoResponse getBasicProfile(String token) {
+        String username = jwtService.extractUsername(token);
+        UserEntity user = userRepo.findByEmail(username)
+                .orElseThrow(() -> new TouristNotFoundException("User not found"));
 
-        updateEntityFromRequest(existingProfile, request);
-        TouristProfileEntity updatedProfile = touristProfileRepo.save(existingProfile);
-        return mapToResponse(updatedProfile);
+        TouristProfileEntity profile = touristProfileRepo.findByUserId(user.getId())
+                .orElseThrow(() -> new TouristNotFoundException("Tourist profile not found"));
+
+        return new TouristBasicInfoResponse(
+                profile.getId(),
+                profile.getName(),
+                profile.getEmail(),
+                profile.getType().name(),
+                profile.getNationality(),
+                profile.getMotherLanguage(),
+                profile.getLanguages()
+        );
     }
 
+    // Step 2: Complete Travel Info
+    @Transactional
+    public void completeTravelInfo(TouristTravelInfoRequest request, String token) {
+        String username = jwtService.extractUsername(token);
+        UserEntity user = userRepo.findByEmail(username)
+                .orElseThrow(() -> new TouristNotFoundException("User not found"));
+
+        TouristProfileEntity profile = touristProfileRepo.findByUserId(user.getId())
+                .orElseThrow(() -> new TouristNotFoundException("Tourist profile not found"));
+
+        profile.setTravelDateFrom(request.travelDateFrom());
+        profile.setTravelDateTo(request.travelDateTo());
+        profile.setDestinationCity(request.destinationCity());
+        profile.setTripType(request.tripType());
+        profile.setNumberOfTravelers(request.numberOfTravelers());
+
+        touristProfileRepo.save(profile);
+    }
+
+    // Step 2: Get Travel Info
+    public TouristTravelInfoResponse getTravelInfo(String token) {
+        String username = jwtService.extractUsername(token);
+        UserEntity user = userRepo.findByEmail(username)
+                .orElseThrow(() -> new TouristNotFoundException("User not found"));
+
+        TouristProfileEntity profile = touristProfileRepo.findByUserId(user.getId())
+                .orElseThrow(() -> new TouristNotFoundException("Tourist profile not found"));
+
+        return new TouristTravelInfoResponse(
+                profile.getId(),
+                profile.getTravelDateFrom(),
+                profile.getTravelDateTo(),
+                profile.getDestinationCity(),
+                profile.getTripType(),
+                profile.getNumberOfTravelers()
+        );
+    }
+
+    // Step 3: Add Travel Interests
+    @Transactional
+    public void addTravelInterests(TouristInterestsRequest request, String token) {
+        String username = jwtService.extractUsername(token);
+        UserEntity user = userRepo.findByEmail(username)
+                .orElseThrow(() -> new TouristNotFoundException("User not found"));
+
+        TouristProfileEntity profile = touristProfileRepo.findByUserId(user.getId())
+                .orElseThrow(() -> new TouristNotFoundException("Tourist profile not found"));
+
+        profile.setTravelInterests(request.travelInterests());
+        touristProfileRepo.save(profile);
+    }
+
+    // Step 3: Get Travel Interests
+    public TouristInterestsResponse getTravelInterests(String token) {
+        String username = jwtService.extractUsername(token);
+        UserEntity user = userRepo.findByEmail(username)
+                .orElseThrow(() -> new TouristNotFoundException("User not found"));
+
+        TouristProfileEntity profile = touristProfileRepo.findByUserId(user.getId())
+                .orElseThrow(() -> new TouristNotFoundException("Tourist profile not found"));
+
+        return new TouristInterestsResponse(
+                profile.getId(),
+                profile.getTravelInterests()
+        );
+    }
+
+    // Step 4: Complete Preferences
+    @Transactional
+    public void completePreferences(TouristPreferencesRequest request, String token) {
+        String username = jwtService.extractUsername(token);
+        UserEntity user = userRepo.findByEmail(username)
+                .orElseThrow(() -> new TouristNotFoundException("User not found"));
+
+        TouristProfileEntity profile = touristProfileRepo.findByUserId(user.getId())
+                .orElseThrow(() -> new TouristNotFoundException("Tourist profile not found"));
+
+        profile.setSpecialNeeds(request.specialNeeds());
+        profile.setTravelPreferences(request.travelPreferences());
+        profile.setFoodPreference(request.foodPreference());
+        profile.setFoodAllergies(request.foodAllergies());
+        profile.setNotes(request.notes());
+
+        touristProfileRepo.save(profile);
+    }
+
+    // Step 4: Get Preferences
+    public TouristPreferencesResponse getPreferences(String token) {
+        String username = jwtService.extractUsername(token);
+        UserEntity user = userRepo.findByEmail(username)
+                .orElseThrow(() -> new TouristNotFoundException("User not found"));
+
+        TouristProfileEntity profile = touristProfileRepo.findByUserId(user.getId())
+                .orElseThrow(() -> new TouristNotFoundException("Tourist profile not found"));
+
+        return new TouristPreferencesResponse(
+                profile.getId(),
+                profile.getSpecialNeeds(),
+                profile.getTravelPreferences(),
+                profile.getFoodPreference(),
+                profile.getFoodAllergies(),
+                profile.getNotes()
+        );
+    }
+
+    // Update profile field by token (for file uploads)
+    @Transactional
+    public void updateProfileFieldByToken(String token, String fieldName, String value) {
+        String username = jwtService.extractUsername(token);
+        UserEntity user = userRepo.findByEmail(username)
+                .orElseThrow(() -> new TouristNotFoundException("User not found"));
+
+        TouristProfileEntity profile = touristProfileRepo.findByUserId(user.getId())
+                .orElseThrow(() -> new TouristNotFoundException("Tourist profile not found"));
+
+        switch (fieldName) {
+            case "profilePhoto" -> profile.setProfilePhoto(value);
+            default -> throw new IllegalArgumentException("Invalid field name: " + fieldName);
+        }
+
+        touristProfileRepo.save(profile);
+    }
+
+    // Delete profile field by token
+    @Transactional
+    public void deleteProfileFieldByToken(String token, String fieldName) {
+        String username = jwtService.extractUsername(token);
+        UserEntity user = userRepo.findByEmail(username)
+                .orElseThrow(() -> new TouristNotFoundException("User not found"));
+
+        TouristProfileEntity profile = touristProfileRepo.findByUserId(user.getId())
+                .orElseThrow(() -> new TouristNotFoundException("Tourist profile not found"));
+
+        switch (fieldName) {
+            case "profilePhoto" -> profile.setProfilePhoto(null);
+            default -> throw new IllegalArgumentException("Invalid field name: " + fieldName);
+        }
+
+        touristProfileRepo.save(profile);
+    }
+
+    // Get complete profile by ID
     public TouristProfileResponse getProfileById(Long id) {
         TouristProfileEntity profile = touristProfileRepo.findById(id)
                 .orElseThrow(() -> new TouristNotFoundException("Tourist profile not found with id: " + id));
         return mapToResponse(profile);
     }
 
+    // Get profiles by user ID
     public List<TouristProfileResponse> getProfilesByUserId(Long userId) {
-        List<TouristProfileEntity> profiles = touristProfileRepo.findByUserId(userId);
+        List<TouristProfileEntity> profiles = touristProfileRepo.findAllByUserId(userId);
         return profiles.stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
     }
 
+    // Get all tourists (paginated)
     public Page<TouristProfileResponse> getAllTourists(Pageable pageable) {
         return touristProfileRepo.findAll(pageable)
                 .map(this::mapToResponse);
     }
 
+    // Delete profile
+    @Transactional
     public void deleteProfile(Long id) {
         TouristProfileEntity profile = touristProfileRepo.findById(id)
                 .orElseThrow(() -> new TouristNotFoundException("Tourist profile not found with id: " + id));
         touristProfileRepo.delete(profile);
     }
 
-    private TouristProfileEntity mapToEntity(TouristProfileRequest request) {
-        TouristProfileEntity entity = new TouristProfileEntity();
-        entity.setUserId(request.getUserId());
-        entity.setName(request.getName());
-        entity.setEmail(request.getEmail());
-        entity.setType(TouristProfileEntity.TouristType.valueOf(request.getType().toUpperCase()));
-        entity.setNationality(request.getNationality());
-        entity.setMotherLanguage(request.getMotherLanguage());
-        entity.setLanguages(request.getLanguages());
-        entity.setTravelDateFrom(request.getTravelDateFrom());
-        entity.setTravelDateTo(request.getTravelDateTo());
-        entity.setDestinationCity(request.getDestinationCity());
-        entity.setTripType(request.getTripType());
-        entity.setNumberOfTravelers(request.getNumberOfTravelers());
-        entity.setTravelInterests(request.getTravelInterests());
-        entity.setSpecialNeeds(request.getSpecialNeeds());
-        entity.setTravelPreferences(request.getTravelPreferences());
-        entity.setFoodPreferences(request.getFoodPreferences());
-        entity.setNotes(request.getNotes());
-        return entity;
-    }
-
-    private void updateEntityFromRequest(TouristProfileEntity entity, TouristProfileRequest request) {
-        if (request.getUserId() != null) entity.setUserId(request.getUserId());
-        if (request.getName() != null) entity.setName(request.getName());
-        if (request.getEmail() != null) entity.setEmail(request.getEmail());
-        if (request.getType() != null) entity.setType(TouristProfileEntity.TouristType.valueOf(request.getType().toUpperCase()));
-        if (request.getNationality() != null) entity.setNationality(request.getNationality());
-        if (request.getMotherLanguage() != null) entity.setMotherLanguage(request.getMotherLanguage());
-        if (request.getLanguages() != null) entity.setLanguages(request.getLanguages());
-        if (request.getTravelDateFrom() != null) entity.setTravelDateFrom(request.getTravelDateFrom());
-        if (request.getTravelDateTo() != null) entity.setTravelDateTo(request.getTravelDateTo());
-        if (request.getDestinationCity() != null) entity.setDestinationCity(request.getDestinationCity());
-        if (request.getTripType() != null) entity.setTripType(request.getTripType());
-        if (request.getNumberOfTravelers() != null) entity.setNumberOfTravelers(request.getNumberOfTravelers());
-        if (request.getTravelInterests() != null) entity.setTravelInterests(request.getTravelInterests());
-        if (request.getSpecialNeeds() != null) entity.setSpecialNeeds(request.getSpecialNeeds());
-        if (request.getTravelPreferences() != null) entity.setTravelPreferences(request.getTravelPreferences());
-        if (request.getFoodPreferences() != null) entity.setFoodPreferences(request.getFoodPreferences());
-        if (request.getNotes() != null) entity.setNotes(request.getNotes());
-    }
-
+    // Map entity to response DTO
     private TouristProfileResponse mapToResponse(TouristProfileEntity entity) {
-        TouristProfileResponse response = new TouristProfileResponse();
-        response.setId(entity.getId());
-        response.setUserId(entity.getUserId());
-        response.setName(entity.getName());
-        response.setEmail(entity.getEmail());
-        response.setType(entity.getType().name());
-        response.setNationality(entity.getNationality());
-        response.setMotherLanguage(entity.getMotherLanguage());
-        response.setLanguages(entity.getLanguages());
-        response.setTravelDateFrom(entity.getTravelDateFrom());
-        response.setTravelDateTo(entity.getTravelDateTo());
-        response.setDestinationCity(entity.getDestinationCity());
-        response.setTripType(entity.getTripType());
-        response.setNumberOfTravelers(entity.getNumberOfTravelers());
-        response.setTravelInterests(entity.getTravelInterests());
-        response.setSpecialNeeds(entity.getSpecialNeeds());
-        response.setTravelPreferences(entity.getTravelPreferences());
-        response.setFoodPreferences(entity.getFoodPreferences());
-        response.setNotes(entity.getNotes());
-        return response;
+        return new TouristProfileResponse(
+                entity.getId(),
+                entity.getUser() != null ? entity.getUser().getId() : null,
+                entity.getName(),
+                entity.getEmail(),
+                entity.getType().name(),
+                entity.getNationality(),
+                entity.getMotherLanguage(),
+                entity.getLanguages(),
+                entity.getTravelDateFrom(),
+                entity.getTravelDateTo(),
+                entity.getDestinationCity(),
+                entity.getTripType(),
+                entity.getNumberOfTravelers(),
+                entity.getTravelInterests(),
+                entity.getSpecialNeeds(),
+                entity.getTravelPreferences(),
+                entity.getFoodPreference(),
+                entity.getFoodAllergies(),
+                entity.getNotes(),
+                entity.getProfilePhoto()
+        );
     }
 }
-*/

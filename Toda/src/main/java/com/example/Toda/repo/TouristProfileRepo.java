@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TouristProfileRepo extends JpaRepository<TouristProfileEntity, Long> {
-    List<TouristProfileEntity> findByUserId(Long userId);
+    Optional<TouristProfileEntity> findByUserId(Long userId);
+    List<TouristProfileEntity> findAllByUserId(Long userId);
     Optional<TouristProfileEntity> findByEmail(String email);
 }

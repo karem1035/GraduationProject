@@ -62,9 +62,10 @@ public class UserWithProfileResponse {
         private String tripType;
         private Integer numberOfTravelers;
         private List<String> travelInterests;
-        private List<String> specialNeeds;
+        private String specialNeeds;
         private List<String> travelPreferences;
-        private List<String> foodPreferences;
+        private String foodPreference;
+        private String foodAllergies;
         private String notes;
     }
 }

@@ -61,23 +61,25 @@ public class TouristProfileEntity {
     @Column(name = "interest")
     private List<String> travelInterests;
 
-    @ElementCollection
-    @CollectionTable(name = "tourist_special_needs", joinColumns = @JoinColumn(name = "tourist_profile_id"))
-    @Column(name = "special_need")
-    private List<String> specialNeeds;
+    @Column(name = "special_needs")
+    private String specialNeeds;
 
     @ElementCollection
     @CollectionTable(name = "tourist_travel_preferences", joinColumns = @JoinColumn(name = "tourist_profile_id"))
     @Column(name = "preference")
     private List<String> travelPreferences;
 
-    @ElementCollection
-    @CollectionTable(name = "tourist_food_preferences", joinColumns = @JoinColumn(name = "tourist_profile_id"))
     @Column(name = "food_preference")
-    private List<String> foodPreferences;
+    private String foodPreference;
+
+    @Column(name = "food_allergies", columnDefinition = "TEXT")
+    private String foodAllergies;
 
     @Column(name = "notes", columnDefinition = "TEXT")
     private String notes;
+
+    @Column(name = "profile_photo")
+    private String profilePhoto;
 
     public enum TouristType {
         MALE,

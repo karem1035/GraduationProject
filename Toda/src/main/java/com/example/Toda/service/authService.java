@@ -115,7 +115,8 @@ public class authService {
                                 tp.getTravelInterests(),
                                 tp.getSpecialNeeds(),
                                 tp.getTravelPreferences(),
-                                tp.getFoodPreferences(),
+                                tp.getFoodPreference(),
+                                tp.getFoodAllergies(),
                                 tp.getNotes()
                         );
                 response.setTouristProfile(profileData);
