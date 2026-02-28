@@ -97,7 +97,7 @@ public class authService {
                 response.setTourGuideProfile(profileData);
             }
         } else if (user.getRole() == Role.TOURIST) {
-            Optional<TouristProfileEntity> tourist = touristProfileRepo.findByEmail(email);
+            Optional<TouristProfileEntity> tourist = touristProfileRepo.findByUserId(user.getId());
             if (tourist.isPresent()) {
                 TouristProfileEntity tp = tourist.get();
                 UserWithProfileResponse.TouristProfileData profileData = 
