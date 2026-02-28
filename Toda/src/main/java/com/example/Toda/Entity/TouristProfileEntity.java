@@ -47,13 +47,13 @@ public class TouristProfileEntity {
     @Column(name = "travel_date_to")
     private LocalDate travelDateTo;
 
-    @Column(name = "destination_city", nullable = false)
+    @Column(name = "destination_city")
     private String destinationCity;
 
-    @Column(name = "trip_type", nullable = false)
+    @Column(name = "trip_type")
     private String tripType;
 
-    @Column(name = "number_of_travelers", nullable = false)
+    @Column(name = "number_of_travelers")
     private Integer numberOfTravelers;
 
     @ElementCollection
