@@ -219,7 +219,7 @@ public class TourGuideService {
 
     public TourGuideBasicInfoResponse ReturnBasicProfile(String token) {
         String email = jwtService.extractUsername(token);
-        return tourGuideRepo.findBasicInfoByEmail(email)
+        return userRepo.findBasicInfoByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Tour Guide not found with email: " + email));
     }
 

@@ -5,7 +5,6 @@ import com.example.Toda.service.TouristProfileService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,7 +38,14 @@ public class TouristProfileController {
     public TouristProfileController(TouristProfileService touristProfileService) {
         this.touristProfileService = touristProfileService;
     }
-
+    @GetMapping("/profile/SingUpDetails")
+    public ResponseEntity<ApiResponse<TourGuideBasicInfoResponse>> getTouristEmailAndPass(@RequestHeader("Authorization") String authHeader)
+    {
+        if(!authHeader.startsWith("Bearer ")||authHeader==null)throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        String token = authHeader.substring(7);
+        TourGuideBasicInfoResponse response=touristProfileService.ReturnBasicProfile(token);
+        return ResponseEntity.ok().body(ApiResponse.success("success",response));
+    }
     // ==================== STEP 1: Basic Information ====================
 
     @PostMapping("/profile/basic-info")

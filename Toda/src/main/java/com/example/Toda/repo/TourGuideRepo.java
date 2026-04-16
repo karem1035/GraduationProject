@@ -10,7 +10,5 @@ import java.util.Optional;
 
 public interface TourGuideRepo extends JpaRepository<TourGuideEntity, Long> {
     Optional<TourGuideEntity> findByEmail(String email);
-    @Query("SELECT new com.example.Toda.DTO.TourGuideBasicInfoResponse(t.name, t.email) " +
-            "FROM TourGuideEntity t WHERE t.email = :email")
-    Optional<TourGuideBasicInfoResponse> findBasicInfoByEmail(@Param("email") String email);
+
 }

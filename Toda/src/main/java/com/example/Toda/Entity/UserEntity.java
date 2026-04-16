@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "_user")
 @Data
@@ -20,6 +23,11 @@ public class UserEntity {
     String email;
     @Column(name = "password", nullable = false,unique = true, length = 255)
     String Password;
+    @Column(name = "is_deleted")
+    private boolean isDeleted = false;
+
+    @Column(name = "deletion_date")
+    private LocalDateTime deletionDate;
     @Enumerated(EnumType.STRING)
     Role role;
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)

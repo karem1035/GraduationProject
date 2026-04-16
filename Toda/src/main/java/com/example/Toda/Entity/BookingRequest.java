@@ -1,0 +1,38 @@
+package com.example.Toda.Entity;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "booking_requests")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class BookingRequest {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tourist_id")
+    private TouristProfileEntity tourist;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tour_guide_id")
+    private TourGuideEntity tourGuide;
+
+    private String category;
+    private LocalDateTime date;
+    private Integer touristCount;
+
+    @Enumerated(EnumType.STRING)
+    private RequestStatus status = RequestStatus.PENDING;
+
+    public enum RequestStatus {
+        PENDING, ACCEPTED, DECLINED, COMPLETED
+    }
+}

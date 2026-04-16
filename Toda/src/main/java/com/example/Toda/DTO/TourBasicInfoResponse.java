@@ -1,8 +1,7 @@
 package com.example.Toda.DTO;
 
-public record TourGuideBasicInfoResponse(
+public record TourBasicInfoResponse(
         String Username,
         String email
-
 ) {
 }

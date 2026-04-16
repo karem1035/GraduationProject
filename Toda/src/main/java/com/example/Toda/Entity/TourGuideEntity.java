@@ -87,4 +87,9 @@ public class TourGuideEntity {
     public enum GuideType { MALE, FEMALE }
     public enum GuideTypeCategory { LICENSED_GUIDE, LOCAL_GUIDE }
     public enum TourType { GROUP, PRIVATE }
+    @OneToMany(mappedBy = "tourGuide", cascade = CascadeType.ALL)
+    private List<Trip> upcomingTrips = new ArrayList<>();
+
+    @OneToMany(mappedBy = "tourGuide", cascade = CascadeType.ALL)
+    private List<BookingRequest> bookingRequests = new ArrayList<>();
 }

@@ -59,14 +59,16 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
-                        // 1. المسارات العامة (لازم تكون فوق خالص)
+
                         .requestMatchers(
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
                                 "/webjars/**",
                                 "/swagger-resources/**",
-                                "/uploads/**"
+                                "/uploads/**",
+                                "/error",
+                                "/favicon.ico"
                         ).permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/error").permitAll()
@@ -92,7 +94,10 @@ public class SecurityConfig {
                 "/swagger-ui/**",
                 "/swagger-ui.html",
                 "/webjars/**",
-                "/swagger-resources/**"
+                "/swagger-resources/**",
+                "/uploads/**",
+                "/favicon.ico",
+                "/error"
         );
     }
 }

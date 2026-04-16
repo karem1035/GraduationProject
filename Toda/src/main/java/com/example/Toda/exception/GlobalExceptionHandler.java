@@ -12,7 +12,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UserAlreadyExistsException.class)
     public ResponseEntity<ApiResponse<Void>> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {
-        // بنستخدم الـ ApiResponse.error عشان نرجع JSON منظم
+
         return ResponseEntity
                 .status(HttpStatus.CONFLICT)
                 .body(ApiResponse.error(ex.getMessage()));
@@ -25,7 +25,7 @@ public class GlobalExceptionHandler {
                 .body(ApiResponse.error(ex.getMessage()));
     }
 
-    // ضيف دي كمان عشان تمسك أخطاء الـ Login (الباسورد الغلط)
+
     @ExceptionHandler(org.springframework.security.authentication.BadCredentialsException.class)
     public ResponseEntity<ApiResponse<Void>> handleBadCredentials() {
         return ResponseEntity

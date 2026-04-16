@@ -263,4 +263,10 @@ public class TouristProfileService {
                 entity.getProfilePhoto()
         );
     }
+
+    public TourGuideBasicInfoResponse ReturnBasicProfile(String token) {
+        String email = jwtService.extractUsername(token);
+        return userRepo.findBasicInfoByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Tourist  not found with email: " + email));
+    }
 }

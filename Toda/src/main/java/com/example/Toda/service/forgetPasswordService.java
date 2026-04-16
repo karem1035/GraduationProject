@@ -24,7 +24,7 @@ public class forgetPasswordService {
         this.otpProducer = otpProducer;
     }
 
-    public void sendOtp(String email) {
+    public  void sendOtp(String email) {
         UserEntity user=userRepo.findByEmail(email)
                 .orElseThrow(()->new UserNotFoundException("User not found"));
         String otp=OtpUtils.generateOtp();

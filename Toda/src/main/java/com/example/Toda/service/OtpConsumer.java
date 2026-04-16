@@ -22,9 +22,9 @@ public class OtpConsumer {
         System.out.println("Consumer received from Artemis: Sending OTP " + otp + " to " + email);
 
         try {
-            // 2. كود إرسال الإيميل الفعلي
+
             SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom("amrn38420@gmail.com"); // إيميلك اللي طلعت منه الـ App Password
+            message.setFrom("amrn38420@gmail.com");
             message.setTo(email);
             message.setSubject("Your OTP Code");
             message.setText("Hello, your OTP code is: " + otp);
