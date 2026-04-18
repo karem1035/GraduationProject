@@ -68,6 +68,11 @@ public class HomeService {
         String touristPhoto = entity.getTourist().getProfilePhoto() != null ?
                 SERVER_URL + entity.getTourist().getProfilePhoto() : null;
 
+        Long tripId = entity.getTrip() != null ? entity.getTrip().getId() : null;
+        String tripTitle = entity.getTrip() != null ? entity.getTrip().getTitle() : null;
+        String tripCoverImage = entity.getTrip() != null && entity.getTrip().getTripCoverImage() != null ?
+                SERVER_URL + entity.getTrip().getTripCoverImage() : null;
+
         return new BookingRequestResponse(
                 entity.getId(),
                 entity.getTourist().getUser().getUsername(),
@@ -75,7 +80,10 @@ public class HomeService {
                 entity.getCategory(),
                 formattedDate,
                 entity.getTouristCount(),
-                entity.getStatus().name()
+                entity.getStatus().name(),
+                tripId,
+                tripTitle,
+                tripCoverImage
         );
     }
 }

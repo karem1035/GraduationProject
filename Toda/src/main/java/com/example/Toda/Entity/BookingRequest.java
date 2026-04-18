@@ -25,6 +25,10 @@ public class BookingRequest {
     @JoinColumn(name = "tour_guide_id")
     private TourGuideEntity tourGuide;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "trip_id")
+    private Trip trip;
+
     private String category;
     private LocalDateTime date;
     private Integer touristCount;

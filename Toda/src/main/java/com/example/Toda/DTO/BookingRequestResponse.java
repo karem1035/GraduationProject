@@ -7,5 +7,9 @@ public record BookingRequestResponse(
         String category,
         String date,
         Integer touristCount,
-        String status
+        String status,
+        // Trip info
+        Long tripId,
+        String tripTitle,
+        String tripCoverImage
 ) {}

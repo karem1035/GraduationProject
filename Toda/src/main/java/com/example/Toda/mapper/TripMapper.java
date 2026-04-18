@@ -1,23 +1,49 @@
 package com.example.Toda.mapper;
 
-import com.example.Toda.DTO.TripBasicInfoRequest;
-import com.example.Toda.DTO.TripCardResponse;
-import com.example.Toda.DTO.TripInfoPriceRequest;
-import com.example.Toda.DTO.TripInfoTimeRequest;
+import com.example.Toda.DTO.*;
 import com.example.Toda.Entity.Trip;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface TripMapper {
 
     @Mapping(target = "categories", source = "category")
-     Trip toEntity(TripBasicInfoRequest dto);
-     Trip toTrip(TripInfoTimeRequest dto);
-     Trip toTrip(TripInfoPriceRequest dto);
-     TripBasicInfoRequest toDto(Trip entity);
+    @Mapping(target = "status", constant = "NEW")
+    Trip toEntity(TripBasicInfoRequest dto);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "title", ignore = true)
+    @Mapping(target = "city", ignore = true)
+    @Mapping(target = "meetingPoint", ignore = true)
+    @Mapping(target = "categories", ignore = true)
+    @Mapping(target = "tourGuide", ignore = true)
+    @Mapping(target = "tripCoverImage", ignore = true)
+    @Mapping(target = "pricePerTourist", ignore = true)
+    @Mapping(target = "inclusions", ignore = true)
+    @Mapping(target = "status", ignore = true)
+    void updateTripFromTimeRequest(TripInfoTimeRequest dto, @MappingTarget Trip trip);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "title", ignore = true)
+    @Mapping(target = "city", ignore = true)
+    @Mapping(target = "meetingPoint", ignore = true)
+    @Mapping(target = "categories", ignore = true)
+    @Mapping(target = "tourGuide", ignore = true)
+    @Mapping(target = "tripCoverImage", ignore = true)
+    @Mapping(target = "startDate", ignore = true)
+    @Mapping(target = "endDate", ignore = true)
+    @Mapping(target = "description", ignore = true)
+    @Mapping(target = "minGroupSize", ignore = true)
+    @Mapping(target = "maxGroupSize", ignore = true)
+    @Mapping(target = "tourDuration", ignore = true)
+    @Mapping(target = "status", ignore = true)
+    void updateTripFromPriceRequest(TripInfoPriceRequest dto, @MappingTarget Trip trip);
+
     @Mapping(source = "tripCoverImage", target = "coverImageUrl")
     @Mapping(target = "category", expression = "java(getFirstCategory(trip))")
     @Mapping(target = "status", expression = "java(formatStatus(trip))")

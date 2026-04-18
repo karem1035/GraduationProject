@@ -71,6 +71,7 @@ public class SecurityConfig {
                                 "/favicon.ico"
                         ).permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/v1/trips/**").permitAll()
                         .requestMatchers("/error").permitAll()
 
 
