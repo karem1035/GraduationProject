@@ -1,0 +1,69 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: toda-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: Toda
+      MYSQL_USER: toda
+      MYSQL_PASSWORD: azaneven2004
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - toda-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  artemis:
+    image: apache/activemq-artemis:2.33.0
+    container_name: toda-artemis
+    environment:
+      ARTEMIS_USER: admin
+      ARTEMIS_PASSWORD: admin
+    ports:
+      - "61616:61616"
+      - "8161:8161"
+    volumes:
+      - artemis-data:/var/lib/artemis/data
+    networks:
+      - toda-network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: toda-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      artemis:
+        condition: service_started
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/Toda?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: toda
+      SPRING_DATASOURCE_PASSWORD: azaneven2004
+      SPRING_ARTEMIS_BROKER_URL: tcp://artemis:61616
+      SPRING_ARTEMIS_USER: admin
+      SPRING_ARTEMIS_PASSWORD: admin
+      APP_SERVER_BASE_URL: http://localhost:8080
+    volumes:
+      - uploads-data:/app/uploads
+    networks:
+      - toda-network
+
+volumes:
+  mysql-data:
+  artemis-data:
+  uploads-data:
+
+networks:
+  toda-network:
+    driver: bridge
