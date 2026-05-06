@@ -41,5 +41,39 @@ public class DataSeeder implements CommandLineRunner {
         } else {
             logger.info("Admin user already exists. Skipping creation.");
         }
+
+        // Create tourist user
+        if (userRepo.findByEmail("tourist@toda.com").isEmpty()) {
+            UserEntity tourist = new UserEntity();
+            tourist.setUsername("tourist");
+            tourist.setEmail("tourist@toda.com");
+            tourist.setPassword(passwordEncoder.encode("0000"));
+            tourist.setRole(Role.TOURIST);
+            
+            userRepo.save(tourist);
+            
+            logger.info("Tourist user created successfully!");
+            logger.info("Email: tourist@toda.com");
+            logger.info("Password: 0000");
+        } else {
+            logger.info("Tourist user already exists. Skipping creation.");
+        }
+
+        // Create tourguide user
+        if (userRepo.findByEmail("tourguide@toda.com").isEmpty()) {
+            UserEntity tourguide = new UserEntity();
+            tourguide.setUsername("tourguide");
+            tourguide.setEmail("tourguide@toda.com");
+            tourguide.setPassword(passwordEncoder.encode("0000"));
+            tourguide.setRole(Role.TOURGUIDE);
+            
+            userRepo.save(tourguide);
+            
+            logger.info("Tourguide user created successfully!");
+            logger.info("Email: tourguide@toda.com");
+            logger.info("Password: 0000");
+        } else {
+            logger.info("Tourguide user already exists. Skipping creation.");
+        }
     }
 }
