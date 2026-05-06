@@ -36,7 +36,7 @@ services:
 
   app:
     build:
-      context: .
+      context: ./Toda
       dockerfile: Dockerfile
     container_name: toda-app
     ports:
