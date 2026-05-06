@@ -9,8 +9,6 @@ services:
       MYSQL_DATABASE: Toda
       MYSQL_USER: toda
       MYSQL_PASSWORD: azaneven2004
-    ports:
-      - "3306:3306"
     volumes:
       - mysql-data:/var/lib/mysql
     networks:
@@ -26,9 +24,6 @@ services:
     environment:
       ARTEMIS_USER: admin
       ARTEMIS_PASSWORD: admin
-    ports:
-      - "61616:61616"
-      - "8161:8161"
     volumes:
       - artemis-data:/var/lib/artemis/data
     networks:
@@ -39,8 +34,6 @@ services:
       context: ./Toda
       dockerfile: Dockerfile
     container_name: toda-app
-    ports:
-      - "8080:8080"
     depends_on:
       mysql:
         condition: service_healthy
