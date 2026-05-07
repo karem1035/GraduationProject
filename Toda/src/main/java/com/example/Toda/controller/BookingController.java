@@ -3,6 +3,8 @@ package com.example.Toda.controller;
 import com.example.Toda.DTO.*;
 import com.example.Toda.Entity.BookingRequest;
 import com.example.Toda.service.BookingService;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -95,6 +97,8 @@ public class BookingController {
      */
     @GetMapping("/tourist/bookings")
     public ResponseEntity<ApiResponse<List<TouristBookingResponse>>> getTouristBookings(
+            @Parameter(description = "Filter by booking status (PENDING, ACCEPTED, DECLINED, COMPLETED)",
+                      schema = @Schema(allowableValues = {"PENDING", "ACCEPTED", "DECLINED", "COMPLETED"}))
             @RequestParam(required = false) String status,
             @AuthenticationPrincipal UserDetails userDetails) {
 

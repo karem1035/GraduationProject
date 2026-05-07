@@ -5,6 +5,7 @@ import com.example.Toda.Entity.TripStatus;
 import com.example.Toda.service.TripService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -100,7 +101,9 @@ public class TripController {
                        "Valid transitions: NEW → UPCOMING, NEW → CANCELLED, UPCOMING → COMPLETED, UPCOMING → CANCELLED")
     public ResponseEntity<ApiResponse<TripCardResponse>> updateTripStatus(
             @Parameter(description = "Trip ID", required = true) @PathVariable Long tripId,
-            @Parameter(description = "New status (UPCOMING, COMPLETED, CANCELLED)", required = true)
+            @Parameter(description = "New status (UPCOMING, COMPLETED, CANCELLED)", 
+                      required = true,
+                      schema = @Schema(allowableValues = {"UPCOMING", "COMPLETED", "CANCELLED"}))
             @RequestParam TripStatus status,
             @AuthenticationPrincipal UserDetails userDetails) {
 
