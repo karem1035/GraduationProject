@@ -7,6 +7,7 @@ import com.example.Toda.Entity.Trip;
 import com.example.Toda.Entity.TripStatus;
 import com.example.Toda.Entity.UserEntity;
 import com.example.Toda.mapper.TripMapper;
+import com.example.Toda.repo.LandmarkRepository;
 import com.example.Toda.repo.TripRepository;
 import com.example.Toda.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,13 +31,15 @@ import java.util.UUID;
 @Service
 public class TripService {
     private final TripRepository tripRepository;
+    private final LandmarkRepository landmarkRepository;
     @Autowired
     private TripMapper tripMapper;
     private final UserRepo userRepo;
     private final String uploadDir = "uploads/covers/";
 
-    public TripService(TripRepository tripRepository, UserRepo userRepo) {
+    public TripService(TripRepository tripRepository, LandmarkRepository landmarkRepository, UserRepo userRepo) {
         this.tripRepository = tripRepository;
+        this.landmarkRepository = landmarkRepository;
         this.userRepo = userRepo;
     }
 
@@ -50,6 +53,13 @@ public class TripService {
 
         Trip trip = tripMapper.toEntity(request);
         trip.setTourGuide(guide);
+
+        // Attach landmarks if provided
+        if (request.landmarkIds() != null && !request.landmarkIds().isEmpty()) {
+            List<Landmark> landmarks = landmarkRepository.findAllById(request.landmarkIds());
+            trip.setLandmarks(landmarks);
+        }
+
         trip = tripRepository.save(trip);
 
         return new TripCreateResponse(trip.getId(), "Trip created successfully");
