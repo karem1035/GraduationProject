@@ -58,4 +58,9 @@ public interface TripRepository extends JpaRepository<Trip, Long> {
      * Get all trips by a specific tour guide (for public profile viewing).
      */
     Page<Trip> findByTourGuideIdAndStatus(Long guideId, TripStatus status, Pageable pageable);
+
+    /**
+     * Get all published trips that include a specific landmark.
+     */
+    Page<Trip> findByLandmarksIdAndStatus(Long landmarkId, TripStatus status, Pageable pageable);
 }

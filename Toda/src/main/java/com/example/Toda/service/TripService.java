@@ -1,6 +1,7 @@
 package com.example.Toda.service;
 
 import com.example.Toda.DTO.*;
+import com.example.Toda.Entity.Landmark;
 import com.example.Toda.Entity.TourGuideEntity;
 import com.example.Toda.Entity.Trip;
 import com.example.Toda.Entity.TripStatus;
@@ -221,6 +222,8 @@ public class TripService {
                 guide.getYearsOfExperience()
         );
 
+        List<LandmarkCardResponse> landmarkCards = tripMapper.toLandmarkCardResponseList(trip.getLandmarks());
+
         return new TripDetailsResponse(
                 trip.getId(),
                 trip.getTitle(),
@@ -237,6 +240,7 @@ public class TripService {
                 trip.getTripCoverImage(),
                 trip.getCategories(),
                 trip.getInclusions(),
+                landmarkCards,
                 guideInfo
         );
     }

@@ -76,6 +76,7 @@ public class SecurityConfig {
                         ).permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/v1/trips/**").permitAll()
+                        .requestMatchers("/api/v1/public/landmarks/**").permitAll()
                         .requestMatchers("/error").permitAll()
 
 

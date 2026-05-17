@@ -19,6 +19,7 @@ public record TripDetailsResponse(
         String coverImageUrl,
         List<String> categories,
         List<String> inclusions,
+        List<LandmarkCardResponse> landmarks,
         GuideInfo guide
 ) {
     public record GuideInfo(

@@ -1,6 +1,7 @@
 package com.example.Toda.mapper;
 
 import com.example.Toda.DTO.*;
+import com.example.Toda.Entity.Landmark;
 import com.example.Toda.Entity.Trip;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -14,6 +15,7 @@ public interface TripMapper {
 
     @Mapping(target = "categories", source = "category")
     @Mapping(target = "status", constant = "NEW")
+    @Mapping(target = "landmarks", ignore = true)
     Trip toEntity(TripBasicInfoRequest dto);
 
     @Mapping(target = "id", ignore = true)
@@ -26,6 +28,7 @@ public interface TripMapper {
     @Mapping(target = "pricePerTourist", ignore = true)
     @Mapping(target = "inclusions", ignore = true)
     @Mapping(target = "status", ignore = true)
+    @Mapping(target = "landmarks", ignore = true)
     void updateTripFromTimeRequest(TripInfoTimeRequest dto, @MappingTarget Trip trip);
 
     @Mapping(target = "id", ignore = true)
@@ -42,6 +45,7 @@ public interface TripMapper {
     @Mapping(target = "maxGroupSize", ignore = true)
     @Mapping(target = "tourDuration", ignore = true)
     @Mapping(target = "status", ignore = true)
+    @Mapping(target = "landmarks", ignore = true)
     void updateTripFromPriceRequest(TripInfoPriceRequest dto, @MappingTarget Trip trip);
 
     @Mapping(source = "tripCoverImage", target = "coverImageUrl")
@@ -60,5 +64,21 @@ public interface TripMapper {
 
     default String formatStatus(Trip trip) {
         return trip.getStatus() != null ? trip.getStatus().name() : "NEW";
+    }
+
+    default LandmarkCardResponse toLandmarkCardResponse(Landmark landmark) {
+        if (landmark == null) return null;
+        return new LandmarkCardResponse(
+                landmark.getId(),
+                landmark.getName(),
+                landmark.getCity(),
+                landmark.getType() != null ? landmark.getType().name() : null,
+                landmark.getImageUrl()
+        );
+    }
+
+    default List<LandmarkCardResponse> toLandmarkCardResponseList(List<Landmark> landmarks) {
+        if (landmarks == null) return List.of();
+        return landmarks.stream().map(this::toLandmarkCardResponse).toList();
     }
 }
