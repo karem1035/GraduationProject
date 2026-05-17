@@ -6,6 +6,9 @@ import com.example.Toda.service.TripService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,6 +20,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/trip")
+@Tag(name = "Trips (Guide)", description = "Endpoints for tour guides to create and manage trips")
+@SecurityRequirement(name = "Bearer Authentication")
 public class TripController {
     private final TripService tripService;
 
@@ -24,13 +29,16 @@ public class TripController {
         this.tripService = tripService;
     }
 
-    /**
-     * Step 1: Create a new trip with basic info.
-     * Returns the trip ID for subsequent steps.
-     */
+    @Operation(summary = "Create a trip (Step 1: Basic info)",
+               description = "Creates a new trip with basic information. Returns the trip ID for subsequent steps.")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "Trip created successfully"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Invalid trip data")
+    })
     @PostMapping("/create-basic")
     public ResponseEntity<ApiResponse<TripCreateResponse>> createCustomTrip(
-            @RequestBody TripBasicInfoRequest request,
+            @Parameter(description = "Basic trip information", required = true) @RequestBody TripBasicInfoRequest request,
             @AuthenticationPrincipal UserDetails userDetails) {
 
         TripCreateResponse response = tripService.createCustomTrip(request, userDetails.getUsername());
@@ -39,50 +47,68 @@ public class TripController {
         );
     }
 
-    /**
-     * Step 2: Add time details to an existing trip.
-     */
+    @Operation(summary = "Add trip time (Step 2)",
+               description = "Adds time details (start/end dates, duration) to an existing trip")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Trip time info added"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Trip not found"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "403", description = "Not your trip")
+    })
     @PostMapping("/{tripId}/trip-time")
     public ResponseEntity<ApiResponse<String>> addTripTime(
-            @PathVariable Long tripId,
-            @RequestBody TripInfoTimeRequest request,
+            @Parameter(description = "Trip ID", required = true) @PathVariable Long tripId,
+            @Parameter(description = "Time details", required = true) @RequestBody TripInfoTimeRequest request,
             @AuthenticationPrincipal UserDetails userDetails) {
 
         tripService.addTripTime(tripId, request, userDetails.getUsername());
         return ResponseEntity.ok().body(ApiResponse.success("Trip time info added successfully", null));
     }
 
-    /**
-     * Step 3: Add pricing details to an existing trip.
-     */
+    @Operation(summary = "Add trip pricing (Step 3)",
+               description = "Adds pricing details (price, currency, discounts) to an existing trip")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Pricing info added"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Trip not found"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "403", description = "Not your trip")
+    })
     @PostMapping("/{tripId}/trip-price")
     public ResponseEntity<ApiResponse<String>> addTripPrice(
-            @PathVariable Long tripId,
-            @RequestBody TripInfoPriceRequest request,
+            @Parameter(description = "Trip ID", required = true) @PathVariable Long tripId,
+            @Parameter(description = "Pricing details", required = true) @RequestBody TripInfoPriceRequest request,
             @AuthenticationPrincipal UserDetails userDetails) {
 
         tripService.addTripPrice(tripId, request, userDetails.getUsername());
         return ResponseEntity.ok().body(ApiResponse.success("Trip pricing info added successfully", null));
     }
 
-    /**
-     * Step 4: Upload a cover image for an existing trip.
-     */
+    @Operation(summary = "Upload trip cover image (Step 4)",
+               description = "Uploads a cover image for an existing trip. Supported formats: jpg, png, gif, webp")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Image uploaded successfully"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Trip not found"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Invalid file")
+    })
     @PostMapping("/{tripId}/upload-cover")
     public ResponseEntity<ApiResponse<String>> uploadTripCover(
-            @PathVariable Long tripId,
-            @RequestParam("file") MultipartFile file,
+            @Parameter(description = "Trip ID", required = true) @PathVariable Long tripId,
+            @Parameter(description = "Cover image file", required = true) @RequestParam("file") MultipartFile file,
             @AuthenticationPrincipal UserDetails userDetails) {
 
         String imageUrl = tripService.saveTripCover(tripId, file, userDetails.getUsername());
         return ResponseEntity.ok(ApiResponse.success("Image uploaded successfully", imageUrl));
     }
 
-    /**
-     * Get all trips for the authenticated guide, optionally filtered by status.
-     */
+    @Operation(summary = "Get guide's trips",
+               description = "Retrieves all trips for the authenticated tour guide, optionally filtered by status")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Trips retrieved"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized")
+    })
     @GetMapping("/guideTrips")
     public ResponseEntity<ApiResponse<List<TripCardResponse>>> getGuideTrips(
+            @Parameter(description = "Filter by trip status key",
+                       schema = @Schema(allowableValues = {"NEW", "UPCOMING", "COMPLETED", "CANCELLED"},
+                                         description = "NEW - Draft trip, UPCOMING - Scheduled trip, COMPLETED - Finished trip, CANCELLED - Cancelled trip"))
             @RequestParam(required = false) String statusKey,
             @AuthenticationPrincipal UserDetails userDetails) {
 
@@ -91,19 +117,20 @@ public class TripController {
         return ResponseEntity.ok(ApiResponse.success("Filtered trips fetched successfully", trips));
     }
 
-    /**
-     * Update trip status (e.g., NEW → UPCOMING → COMPLETED or CANCELLED).
-     * Only the trip owner (guide) can update the status.
-     */
-    @PatchMapping("/{tripId}/status")
     @Operation(summary = "Update trip status",
                description = "Allows a tour guide to update the status of their trip. " +
                        "Valid transitions: NEW → UPCOMING, NEW → CANCELLED, UPCOMING → COMPLETED, UPCOMING → CANCELLED")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Status updated"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Trip not found"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "403", description = "Not your trip")
+    })
+    @PatchMapping("/{tripId}/status")
     public ResponseEntity<ApiResponse<TripCardResponse>> updateTripStatus(
             @Parameter(description = "Trip ID", required = true) @PathVariable Long tripId,
-            @Parameter(description = "New status (UPCOMING, COMPLETED, CANCELLED)", 
-                      required = true,
-                      schema = @Schema(allowableValues = {"UPCOMING", "COMPLETED", "CANCELLED"}))
+            @Parameter(description = "New status (UPCOMING, COMPLETED, CANCELLED)",
+                       required = true,
+                       schema = @Schema(allowableValues = {"UPCOMING", "COMPLETED", "CANCELLED"}))
             @RequestParam TripStatus status,
             @AuthenticationPrincipal UserDetails userDetails) {
 

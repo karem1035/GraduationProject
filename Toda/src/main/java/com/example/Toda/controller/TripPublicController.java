@@ -5,6 +5,7 @@ import com.example.Toda.service.TripService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/api/v1/trips")
+@Tag(name = "Trips (Public)", description = "Public endpoints for browsing and searching published trips (no authentication required)")
 public class TripPublicController {
 
     private final TripService tripService;

@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import com.example.Toda.Entity.TourGuideEntity;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -29,6 +30,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/tourguide")
+@Tag(name = "Tour Guide Profile", description = "Endpoints for tour guide profile management (basic info, professional info, languages, documents)")
 @SecurityRequirement(name = "Bearer Authentication")
 public class TourGuideController {
 
@@ -41,6 +43,11 @@ public class TourGuideController {
         this.tourGuideService = tourGuideService;
     }
 
+     @Operation(summary = "Create basic profile info", description = "Step 1: Set the tour guide's basic profile information (name, gender, city, etc.)")
+     @ApiResponses(value = {
+             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "Basic profile created"),
+             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized")
+     })
      @PostMapping("/profile/basic-info")
      public ResponseEntity<ApiResponse<String>>createBasicProfile
              (@RequestBody TourGuideBasicInfoRequest basicInfoRequest,@RequestHeader("Authorization")String authHeader)
@@ -51,6 +58,11 @@ public class TourGuideController {
       return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success("created",null));
 
      }
+    @Operation(summary = "Get basic profile info", description = "Retrieve the tour guide's basic profile information")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Profile retrieved"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized")
+    })
     @GetMapping("/profile/basic-info")
     public ResponseEntity<ApiResponse<TourGuideBasicInfoResponse>> ReturnBasicProfile
             (@RequestHeader("Authorization")String authHeader)
@@ -61,6 +73,11 @@ public class TourGuideController {
         return ResponseEntity.ok().body(ApiResponse.success("success",response));
 
     }
+    @Operation(summary = "Set professional info", description = "Step 2: Set the tour guide's professional information (experience, specialization)")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "Professional info saved"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized")
+    })
     @PostMapping("/profile/professional-info")
     public ResponseEntity<ApiResponse<String>> profileProfessionalInfo(@RequestHeader("Authorization")String authHeader
        ,@RequestBody TourGuideProfessionalInfoRequest basicInfoRequest)
@@ -72,6 +89,11 @@ public class TourGuideController {
 
 
     }
+    @Operation(summary = "Add languages", description = "Step 3: Add languages spoken by the tour guide with proficiency levels")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "Languages saved"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized")
+    })
     @PostMapping("/profile/languages")
     public ResponseEntity<ApiResponse<String>>createLanguages(@RequestHeader("Authorization")String authHeader
     ,@RequestBody TourGuideLanguagesInfoRequest basicInfoRequest)
@@ -81,6 +103,11 @@ public class TourGuideController {
         tourGuideService.addLanguages(token,basicInfoRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success("created",null));
     }
+    @Operation(summary = "Set tour details", description = "Step 4: Set additional tour guide details (bio, tour preferences)")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "Tour details saved"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized")
+    })
     @PostMapping("/profile/tour-details")
     public ResponseEntity<ApiResponse<String>>createTourDetails(@RequestHeader("Authorization")String authHeader
             ,@RequestBody TourGuideDetailsInfoRequest basicInfoRequest)
@@ -92,6 +119,11 @@ public class TourGuideController {
     }
 
 
+    @Operation(summary = "Update tour guide profile", description = "Update an existing tour guide profile by ID")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Profile updated"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Tour guide not found")
+    })
     @PatchMapping("/profile/{id}")
     public ResponseEntity<ApiResponse<TourGuideResponse>> updateProfile(
             @PathVariable Long id,
@@ -102,6 +134,11 @@ public class TourGuideController {
                 .body(ApiResponse.success( "Tour guide profile updated successfully" ,response));
     }
 
+    @Operation(summary = "Get tour guide profile by ID", description = "Retrieve a specific tour guide's full profile")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Profile retrieved"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Tour guide not found")
+    })
     @GetMapping("/profile/{id}")
     public ResponseEntity<ApiResponse<TourGuideResponse>> getProfile(@PathVariable Long id) {
         TourGuideResponse response = tourGuideService.getProfileById(id);
@@ -110,6 +147,10 @@ public class TourGuideController {
                 .body(ApiResponse.success("Tour guide profile retrieved successfully", response));
     }
 
+    @Operation(summary = "Get all tour guides", description = "Retrieve a paginated list of all tour guide profiles")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Tour guides retrieved")
+    })
     @GetMapping("/profiles")
     public ResponseEntity<ApiResponse<Page<TourGuideResponse>>> getAllTourGuides(
             @RequestParam(defaultValue = "0") int page,

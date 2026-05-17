@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,6 +28,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/tourist")
+@Tag(name = "Tourist Profile", description = "Endpoints for tourist profile management (basic info, travel info, interests, preferences)")
 @SecurityRequirement(name = "Bearer Authentication")
 public class TouristProfileController {
 
@@ -38,6 +40,11 @@ public class TouristProfileController {
     public TouristProfileController(TouristProfileService touristProfileService) {
         this.touristProfileService = touristProfileService;
     }
+    @Operation(summary = "Get tourist signup details", description = "Retrieves the tourist's email and basic signup details")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Details retrieved"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Unauthorized")
+    })
     @GetMapping("/profile/SingUpDetails")
     public ResponseEntity<ApiResponse<TourGuideBasicInfoResponse>> getTouristEmailAndPass(@RequestHeader("Authorization") String authHeader)
     {
