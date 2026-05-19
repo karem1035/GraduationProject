@@ -3,7 +3,9 @@ package com.example.Toda.Entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +46,8 @@ public class Trip {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tour_guide_id")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private TourGuideEntity tourGuide;
 
     @ManyToMany(fetch = FetchType.LAZY)

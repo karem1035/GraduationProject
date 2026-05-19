@@ -3,7 +3,9 @@ package com.example.Toda.Entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -33,5 +35,7 @@ public class Landmark {
     private String imageUrl;
 
     @ManyToMany(mappedBy = "landmarks", fetch = FetchType.LAZY)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<Trip> trips;
 }

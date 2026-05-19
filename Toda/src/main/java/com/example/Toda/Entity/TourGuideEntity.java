@@ -4,7 +4,9 @@ import com.example.Toda.DTO.PriceRange;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +23,8 @@ public class TourGuideEntity {
     @OneToOne
     @MapsId
     @JoinColumn(name = "user_id")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private UserEntity user;
 
     @Column(name = "name", nullable = false)
@@ -88,8 +92,12 @@ public class TourGuideEntity {
     public enum GuideTypeCategory { LICENSED_GUIDE, LOCAL_GUIDE }
     public enum TourType { GROUP, PRIVATE }
     @OneToMany(mappedBy = "tourGuide", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<Trip> upcomingTrips = new ArrayList<>();
 
     @OneToMany(mappedBy = "tourGuide", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<BookingRequest> bookingRequests = new ArrayList<>();
 }
