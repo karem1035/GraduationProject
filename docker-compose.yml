@@ -57,13 +57,13 @@ services:
     networks:
       - toda-network
     ports:
-      - "8080"
+      - "8080:8080"
     healthcheck:
-      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://localhost:8080/error"]
+      test: ["CMD-SHELL", "wget --spider -q http://localhost:8080/error || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 60s
+      start_period: 90s
 
 volumes:
   mysql-data:
