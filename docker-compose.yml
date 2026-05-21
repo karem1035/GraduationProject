@@ -56,8 +56,10 @@ services:
       - uploads-data:/app/uploads
     networks:
       - toda-network
+    ports:
+      - "8080"
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/error"]
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://localhost:8080/error"]
       interval: 30s
       timeout: 10s
       retries: 3
