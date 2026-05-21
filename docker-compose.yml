@@ -56,18 +56,12 @@ services:
       - uploads-data:/app/uploads
     networks:
       - toda-network
-    ports:
-      - '8080:8080'
+    # رجعنا لـ expose عشان نمنع تعارض المنافذ على السيرفر
+    expose:
+      - '8080'
+    # إلغاء الـ internal healthcheck تماماً وترك الإدارة لـ Coolify
     healthcheck:
-      test:
-        [
-          'CMD-SHELL',
-          'wget --spider -q http://localhost:8080/swagger-ui.html || exit 1',
-        ]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 90s
+      disable: true
 
 volumes:
   mysql-data:
