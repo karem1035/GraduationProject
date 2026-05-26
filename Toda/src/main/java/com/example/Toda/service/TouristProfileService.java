@@ -44,6 +44,7 @@ public class TouristProfileService {
         profile.setNationality(request.nationality());
         profile.setMotherLanguage(request.motherLanguage());
         profile.setLanguages(request.languages());
+        profile.setPhone(request.phone());
 
         touristProfileRepo.save(profile);
     }
@@ -64,7 +65,8 @@ public class TouristProfileService {
                 profile.getType().name(),
                 profile.getNationality(),
                 profile.getMotherLanguage(),
-                profile.getLanguages()
+                profile.getLanguages(),
+                profile.getPhone()
         );
     }
 

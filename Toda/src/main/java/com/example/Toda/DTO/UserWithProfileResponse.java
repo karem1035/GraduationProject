@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -58,6 +59,10 @@ public class UserWithProfileResponse {
         private String nationality;
         private String motherLanguage;
         private List<String> languages;
+        private String phone;
+        private String profilePhoto;
+        private LocalDate travelDateFrom;
+        private LocalDate travelDateTo;
         private String destinationCity;
         private String tripType;
         private Integer numberOfTravelers;

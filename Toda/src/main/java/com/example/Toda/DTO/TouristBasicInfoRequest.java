@@ -32,6 +32,9 @@ public record TouristBasicInfoRequest(
         String motherLanguage,
         
         @Schema(description = "List of languages the tourist knows", example = "[\"English\", \"Spanish\", \"French\"]")
-        List<String> languages
+        List<String> languages,
+
+        @Schema(description = "Tourist's phone number", example = "+201234567890")
+        String phone
 ) {
 }

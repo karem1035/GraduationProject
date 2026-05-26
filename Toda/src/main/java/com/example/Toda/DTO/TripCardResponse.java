@@ -1,5 +1,7 @@
 package com.example.Toda.DTO;
 
+import java.time.LocalDate;
+
 public record TripCardResponse(
         Long id,
         String title,
@@ -8,6 +10,8 @@ public record TripCardResponse(
         String coverImageUrl,
         String duration,
         String status,
-        Double pricePerTourist
+        Double pricePerTourist,
+        LocalDate startDate,
+        LocalDate endDate
 ) {
 }

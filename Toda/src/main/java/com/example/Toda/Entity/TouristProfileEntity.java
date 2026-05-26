@@ -85,6 +85,9 @@ public class TouristProfileEntity {
     @Column(name = "profile_photo")
     private String profilePhoto;
 
+    @Column(name = "phone")
+    private String phone;
+
     public enum TouristType {
         MALE,
         FEMALE
