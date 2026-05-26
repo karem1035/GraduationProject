@@ -222,7 +222,9 @@ public class LandmarkService {
                 trip.getTripCoverImage(),
                 trip.getTourDuration(),
                 status,
-                trip.getPricePerTourist()
+                trip.getPricePerTourist(),
+                trip.getStartDate(),
+                trip.getEndDate()
         );
     }
 }
