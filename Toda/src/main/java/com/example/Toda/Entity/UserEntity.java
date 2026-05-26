@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "_user")
@@ -41,5 +43,24 @@ public class UserEntity {
     @EqualsAndHashCode.Exclude
     private TouristProfileEntity tourristProfile;
 
+    @ManyToMany
+    @JoinTable(
+            name = "user_favorite_trips",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "trip_id")
+    )
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<Trip> favoriteTrips = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_favorite_landmarks",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "landmark_id")
+    )
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<Landmark> favoriteLandmarks = new HashSet<>();
 
 }
