@@ -94,7 +94,7 @@ public class GuideBookingService {
         UserEntity guide = userRepo.findByEmail(guideEmail)
                 .orElseThrow(() -> new RuntimeException("Tour guide not found"));
 
-        if (!booking.getTourGuide().getId().equals(guide.getId())) {
+        if (booking.getTourGuide().getId() != guide.getId()) {
             throw new RuntimeException("You can only accept bookings addressed to you");
         }
 
@@ -115,7 +115,7 @@ public class GuideBookingService {
         UserEntity guide = userRepo.findByEmail(guideEmail)
                 .orElseThrow(() -> new RuntimeException("Tour guide not found"));
 
-        if (!booking.getTourGuide().getId().equals(guide.getId())) {
+        if (booking.getTourGuide().getId() != guide.getId()) {
             throw new RuntimeException("You can only reject bookings addressed to you");
         }
 

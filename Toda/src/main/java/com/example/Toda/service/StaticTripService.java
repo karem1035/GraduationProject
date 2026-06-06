@@ -60,7 +60,7 @@ public class StaticTripService {
         UserEntity user = userRepo.findByEmail(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        if (!trip.getCreatedBy().getId().equals(user.getId())) {
+        if (trip.getCreatedBy().getId() != user.getId()) {
             throw new RuntimeException("You can only upload images to your own trips");
         }
 
