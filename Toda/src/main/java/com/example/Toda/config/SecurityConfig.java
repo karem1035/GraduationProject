@@ -77,9 +77,10 @@ public class SecurityConfig {
                         ).permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/v1/trips/**").permitAll()
-                        .requestMatchers("/api/v1/public/landmarks/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/static-trips/**").permitAll()
+                        .requestMatchers("/api/v1/public/**").permitAll()
+                        .requestMatchers("/api/v1/static-trips/**").permitAll()
                         .requestMatchers("/api/v1/tour-guides/**").permitAll()
+                        .requestMatchers("/api/v1/landmarks/**").permitAll()
                         .requestMatchers("/error").permitAll()
 
 
