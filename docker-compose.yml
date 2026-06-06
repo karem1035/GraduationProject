@@ -56,8 +56,8 @@ services:
       - uploads-data:/app/uploads
     networks:
       - toda-network
-    ports:
-      - '8080:8080'
+    expose:
+      - '8080'
     # إلغاء الـ internal healthcheck تماماً وترك الإدارة لـ Coolify
     healthcheck:
       disable: true
