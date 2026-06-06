@@ -110,18 +110,4 @@ public class SecurityConfig {
         return source;
     }
 
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers(
-                "/v3/api-docs/**",
-                "/v3/api-docs.yaml",
-                "/swagger-ui/**",
-                "/swagger-ui.html",
-                "/webjars/**",
-                "/swagger-resources/**",
-                "/uploads/**",
-                "/favicon.ico",
-                "/error"
-        );
-    }
 }

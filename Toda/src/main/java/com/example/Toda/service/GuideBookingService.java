@@ -9,6 +9,7 @@ import com.example.Toda.repo.GuideBookingRequestRepository;
 import com.example.Toda.repo.TourGuideRepo;
 import com.example.Toda.repo.UserRepo;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,6 +29,7 @@ public class GuideBookingService {
         this.tourGuideRepo = tourGuideRepo;
     }
 
+    @Transactional
     public GuideBookingResponse createBookingRequest(GuideBookingCreateRequest request, String touristEmail) {
         UserEntity tourist = userRepo.findByEmail(touristEmail)
                 .orElseThrow(() -> new RuntimeException("Tourist not found"));
@@ -84,6 +86,7 @@ public class GuideBookingService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public GuideBookingResponse acceptBooking(Long bookingId, String guideEmail) {
         GuideBookingRequest booking = guideBookingRequestRepository.findById(bookingId)
                 .orElseThrow(() -> new RuntimeException("Booking request not found"));
@@ -91,7 +94,7 @@ public class GuideBookingService {
         UserEntity guide = userRepo.findByEmail(guideEmail)
                 .orElseThrow(() -> new RuntimeException("Tour guide not found"));
 
-        if (booking.getTourGuide().getId() != guide.getId()) {
+        if (!booking.getTourGuide().getId().equals(guide.getId())) {
             throw new RuntimeException("You can only accept bookings addressed to you");
         }
 
@@ -104,6 +107,7 @@ public class GuideBookingService {
         return mapToResponse(saved);
     }
 
+    @Transactional
     public GuideBookingResponse rejectBooking(Long bookingId, String guideEmail) {
         GuideBookingRequest booking = guideBookingRequestRepository.findById(bookingId)
                 .orElseThrow(() -> new RuntimeException("Booking request not found"));
@@ -111,7 +115,7 @@ public class GuideBookingService {
         UserEntity guide = userRepo.findByEmail(guideEmail)
                 .orElseThrow(() -> new RuntimeException("Tour guide not found"));
 
-        if (booking.getTourGuide().getId() != guide.getId()) {
+        if (!booking.getTourGuide().getId().equals(guide.getId())) {
             throw new RuntimeException("You can only reject bookings addressed to you");
         }
 

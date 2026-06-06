@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -28,6 +29,7 @@ public class StaticTripService {
         this.userRepo = userRepo;
     }
 
+    @Transactional
     public StaticTripResponse createStaticTrip(StaticTripCreateRequest request, String username) {
         UserEntity user = userRepo.findByEmail(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -50,6 +52,7 @@ public class StaticTripService {
         return mapToFullResponse(saved);
     }
 
+    @Transactional
     public void uploadTripImage(Long tripId, String username, MultipartFile file) {
         StaticTrip trip = staticTripRepository.findById(tripId)
                 .orElseThrow(() -> new RuntimeException("Static trip not found"));
@@ -57,7 +60,7 @@ public class StaticTripService {
         UserEntity user = userRepo.findByEmail(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        if (trip.getCreatedBy().getId() != user.getId()) {
+        if (!trip.getCreatedBy().getId().equals(user.getId())) {
             throw new RuntimeException("You can only upload images to your own trips");
         }
 
