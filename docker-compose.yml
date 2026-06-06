@@ -56,9 +56,8 @@ services:
       - uploads-data:/app/uploads
     networks:
       - toda-network
-    # رجعنا لـ expose عشان نمنع تعارض المنافذ على السيرفر
-    expose:
-      - '8080'
+    ports:
+      - '8080:8080'
     # إلغاء الـ internal healthcheck تماماً وترك الإدارة لـ Coolify
     healthcheck:
       disable: true

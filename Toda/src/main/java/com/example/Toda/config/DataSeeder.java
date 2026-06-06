@@ -418,6 +418,126 @@ public class DataSeeder implements CommandLineRunner {
         s5.setCreatedBy(users.size() > 4 ? users.get(4) : users.get(0));
         trips.add(s5);
 
+        StaticTrip s6 = new StaticTrip();
+        s6.setTitle("Felucca Nile Sunset Cruise");
+        s6.setDescription("Enjoy a relaxing felucca sail on the Nile at sunset with drinks, music, and stunning Cairo skyline views.");
+        s6.setCity("Cairo"); s6.setMeetingPoint("Maadi Corniche Dock");
+        s6.setStartDate(LocalDate.of(2026, 7, 8)); s6.setEndDate(LocalDate.of(2026, 7, 8));
+        s6.setPrice(40.0); s6.setDuration("2 hours"); s6.setGroupSize(12);
+        s6.setCategories(List.of("Relaxation", "Nile", "Sunset"));
+        s6.setInclusions(List.of("Felucca Ride", "Drinks", "Snacks"));
+        s6.setImageUrl("https://images.unsplash.com/photo-1539650116574-8efeb43e2750?w=800&h=500&fit=crop");
+        s6.setCreatedBy(users.size() > 1 ? users.get(1) : users.get(0));
+        trips.add(s6);
+
+        StaticTrip s7 = new StaticTrip();
+        s7.setTitle("Khan El Khalili Shopping Tour");
+        s7.setDescription("Navigate Cairo's most famous bazaar, discover hidden artisan workshops, and practice your bargaining skills.");
+        s7.setCity("Cairo"); s7.setMeetingPoint("Al-Azhar Square");
+        s7.setStartDate(LocalDate.of(2026, 7, 14)); s7.setEndDate(LocalDate.of(2026, 7, 14));
+        s7.setPrice(20.0); s7.setDuration("3 hours"); s7.setGroupSize(10);
+        s7.setCategories(List.of("Shopping", "Cultural", "Walking"));
+        s7.setInclusions(List.of("Guide", "Tea", "Souvenir Map"));
+        s7.setImageUrl("https://images.unsplash.com/photo-1599832327686-baebc9c56d7d?w=800&h=500&fit=crop");
+        s7.setCreatedBy(users.size() > 2 ? users.get(2) : users.get(0));
+        trips.add(s7);
+
+        StaticTrip s8 = new StaticTrip();
+        s8.setTitle("Wadi Al-Hitan Fossil Safari");
+        s8.setDescription("Journey to the Valley of the Whales, a UNESCO World Heritage Site with 40-million-year-old whale fossils.");
+        s8.setCity("Fayoum"); s8.setMeetingPoint("Fayoum City Center");
+        s8.setStartDate(LocalDate.of(2026, 7, 20)); s8.setEndDate(LocalDate.of(2026, 7, 20));
+        s8.setPrice(70.0); s8.setDuration("8 hours"); s8.setGroupSize(8);
+        s8.setCategories(List.of("Nature", "Adventure", "Educational"));
+        s8.setInclusions(List.of("4x4 Transport", "Lunch", "Guide", "Entrance Fees"));
+        s8.setImageUrl("https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=800&h=500&fit=crop");
+        s8.setCreatedBy(users.size() > 3 ? users.get(3) : users.get(0));
+        trips.add(s8);
+
+        StaticTrip s9 = new StaticTrip();
+        s9.setTitle("Alexandria Coastal Day Trip");
+        s9.setDescription("Explore Alexandria's Greco-Roman heritage: Catacombs, Qaitbay Citadel, Montaza Gardens, and fresh seafood lunch.");
+        s9.setCity("Alexandria"); s9.setMeetingPoint("Alexandria Main Train Station");
+        s9.setStartDate(LocalDate.of(2026, 7, 25)); s9.setEndDate(LocalDate.of(2026, 7, 25));
+        s9.setPrice(85.0); s9.setDuration("10 hours"); s9.setGroupSize(10);
+        s9.setCategories(List.of("Historical", "Coastal", "Food"));
+        s9.setInclusions(List.of("Transport", "Lunch", "Entrance Fees", "Guide"));
+        s9.setImageUrl("https://images.unsplash.com/photo-1568322445389-f64e1cf1aab8?w=800&h=500&fit=crop");
+        s9.setCreatedBy(users.size() > 4 ? users.get(4) : users.get(0));
+        trips.add(s9);
+
+        StaticTrip s10 = new StaticTrip();
+        s10.setTitle("Nubian Village Experience");
+        s10.setDescription("Visit a traditional Nubian village, enjoy homemade Nubian cuisine, learn about their culture, and sail on a felucca.");
+        s10.setCity("Aswan"); s10.setMeetingPoint("Aswan Corniche");
+        s10.setStartDate(LocalDate.of(2026, 8, 2)); s10.setEndDate(LocalDate.of(2026, 8, 2));
+        s10.setPrice(50.0); s10.setDuration("5 hours"); s10.setGroupSize(8);
+        s10.setCategories(List.of("Cultural", "Food", "Nile"));
+        s10.setInclusions(List.of("Felucca Ride", "Lunch", "Guide"));
+        s10.setImageUrl("https://images.unsplash.com/photo-1598950750694-7e0dd0dd9e9e?w=800&h=500&fit=crop");
+        s10.setCreatedBy(users.size() > 5 ? users.get(5) : users.get(0));
+        trips.add(s10);
+
+        StaticTrip s11 = new StaticTrip();
+        s11.setTitle("Ras Mohammed Snorkeling Adventure");
+        s11.setDescription("Snorkel in one of the world's best marine reserves with crystal-clear waters and vibrant coral reefs.");
+        s11.setCity("Sharm El Sheikh"); s11.setMeetingPoint("Naama Bay Hotel Lobby");
+        s11.setStartDate(LocalDate.of(2026, 8, 6)); s11.setEndDate(LocalDate.of(2026, 8, 6));
+        s11.setPrice(75.0); s11.setDuration("6 hours"); s11.setGroupSize(10);
+        s11.setCategories(List.of("Beach", "Snorkeling", "Marine Life"));
+        s11.setInclusions(List.of("Boat Trip", "Snorkel Gear", "Lunch", "Guide"));
+        s11.setImageUrl("https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&h=500&fit=crop");
+        s11.setCreatedBy(users.size() > 6 ? users.get(6) : users.get(0));
+        trips.add(s11);
+
+        StaticTrip s12 = new StaticTrip();
+        s12.setTitle("White Desert Stargazing Night");
+        s12.setDescription("Overnight adventure in the White Desert with stargazing, Bedouin storytelling, and camping among chalk formations.");
+        s12.setCity("Farafra"); s12.setMeetingPoint("Bahariya Oasis Meeting Point");
+        s12.setStartDate(LocalDate.of(2026, 8, 12)); s12.setEndDate(LocalDate.of(2026, 8, 13));
+        s12.setPrice(160.0); s12.setDuration("2 days"); s12.setGroupSize(6);
+        s12.setCategories(List.of("Desert", "Adventure", "Camping"));
+        s12.setInclusions(List.of("4x4 Transport", "BBQ Dinner", "Camping Gear", "Breakfast"));
+        s12.setImageUrl("https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=800&h=500&fit=crop");
+        s12.setCreatedBy(users.size() > 7 ? users.get(7) : users.get(0));
+        trips.add(s12);
+
+        StaticTrip s13 = new StaticTrip();
+        s13.setTitle("Islamic Cairo Architecture Tour");
+        s13.setDescription("Discover centuries of Islamic architecture visiting Sultan Hassan Mosque, Al-Rifa'i Mosque, and Ibn Tulun Mosque.");
+        s13.setCity("Cairo"); s13.setMeetingPoint("Sultan Hassan Square");
+        s13.setStartDate(LocalDate.of(2026, 8, 15)); s13.setEndDate(LocalDate.of(2026, 8, 15));
+        s13.setPrice(35.0); s13.setDuration("4 hours"); s13.setGroupSize(15);
+        s13.setCategories(List.of("Historical", "Religious", "Architecture"));
+        s13.setInclusions(List.of("Guide", "Entrance Fees", "Tea Break"));
+        s13.setImageUrl("https://images.unsplash.com/photo-1599832327686-baebc9c56d7d?w=800&h=500&fit=crop");
+        s13.setCreatedBy(users.size() > 1 ? users.get(1) : users.get(0));
+        trips.add(s13);
+
+        StaticTrip s14 = new StaticTrip();
+        s14.setTitle("Egyptian Museum & Grand Museum Tour");
+        s14.setDescription("Full-day guided tour of the Egyptian Museum treasures and the new Grand Egyptian Museum with King Tut's collection.");
+        s14.setCity("Giza"); s14.setMeetingPoint("Tahrir Square, Egyptian Museum Entrance");
+        s14.setStartDate(LocalDate.of(2026, 8, 18)); s14.setEndDate(LocalDate.of(2026, 8, 18));
+        s14.setPrice(55.0); s14.setDuration("6 hours"); s14.setGroupSize(12);
+        s14.setCategories(List.of("Museum", "Historical", "Educational"));
+        s14.setInclusions(List.of("Guide", "Entrance Fees", "Transport Between Museums"));
+        s14.setImageUrl("https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?w=800&h=500&fit=crop");
+        s14.setCreatedBy(users.size() > 2 ? users.get(2) : users.get(0));
+        trips.add(s14);
+
+        StaticTrip s15 = new StaticTrip();
+        s15.setTitle("Red Sea Coral Diving Experience");
+        s15.setDescription("Discover the underwater wonders of the Red Sea with guided coral reef dives suitable for beginners and certified divers.");
+        s15.setCity("Hurghada"); s15.setMeetingPoint("Hurghada Marina");
+        s15.setStartDate(LocalDate.of(2026, 8, 22)); s15.setEndDate(LocalDate.of(2026, 8, 22));
+        s15.setPrice(95.0); s15.setDuration("5 hours"); s15.setGroupSize(8);
+        s15.setCategories(List.of("Diving", "Adventure", "Marine Life"));
+        s15.setInclusions(List.of("Diving Equipment", "Boat Trip", "Lunch", "Instructor"));
+        s15.setImageUrl("https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&h=500&fit=crop");
+        s15.setCreatedBy(users.size() > 3 ? users.get(3) : users.get(0));
+        trips.add(s15);
+
         staticTripRepository.saveAll(trips);
         logger.info("Seeded {} static trips!", trips.size());
     }
