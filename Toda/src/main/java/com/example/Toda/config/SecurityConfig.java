@@ -19,6 +19,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
@@ -77,6 +78,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/v1/trips/**").permitAll()
                         .requestMatchers("/api/v1/public/landmarks/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/static-trips/**").permitAll()
+                        .requestMatchers("/api/v1/tour-guides/**").permitAll()
                         .requestMatchers("/error").permitAll()
 
 
